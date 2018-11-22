@@ -14,6 +14,11 @@ const UserSchema = new mongoose.Schema(
       required: true,
       trim: true
     },
+    roles: {
+      type: Array,
+      required: false,
+      trim: true
+    }
   },
   {
     minimize: false,
