@@ -4,8 +4,14 @@ const timestamps = require('mongoose-timestamp');
 
 const ContentSchema = new mongoose.Schema(
   {
-    title: {
+    author: {
       type: String,
+      required: true,
+      trim: true,
+      default: 'admin'
+    },
+    categories: {
+      type: Array,
       required: true,
       trim: true
     },
@@ -14,21 +20,16 @@ const ContentSchema = new mongoose.Schema(
       required: true,
       trim: true
     },
-    categories: {
-      type: Array,
-      required: true,
-      trim: true
-    },
     published: {
       type: String,
       required: false,
       trim: true
     },
-    creator: {
+    title: {
       type: String,
       required: true,
       trim: true
-    },
+    }
   },
   {
     minimize: false,
