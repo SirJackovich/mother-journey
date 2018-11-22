@@ -30,7 +30,10 @@ const ContentSchema = new mongoose.Schema(
       trim: true
     },
   },
-  { minimize: false },
+  {
+    minimize: false,
+    collection: 'content'
+  },
 );
 
 ContentSchema.plugin(timestamps);

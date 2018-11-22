@@ -10,7 +10,10 @@ const CategorySchema = new mongoose.Schema(
       trim: true
     }
   },
-  { minimize: false },
+  {
+    minimize: false,
+    collection: 'category'
+  },
 );
 
 CategorySchema.plugin(timestamps);

@@ -10,7 +10,10 @@ const RoleSchema = new mongoose.Schema(
       trim: true
     }
   },
-  { minimize: false },
+  {
+    minimize: false,
+    collection: 'role'
+  },
 );
 
 RoleSchema.plugin(timestamps);
