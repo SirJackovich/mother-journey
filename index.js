@@ -1,49 +1,45 @@
+const express = require('express');
 
-/**
- * Module Dependencies
- */
-const config = require('./config');
-const restify = require('restify');
+const app = express();
+
 const mongoose = require('mongoose');
-const restifyPlugins = require('restify-plugins');
-const fs = require('fs');
 
-/**
- * Initialize Server
- */
-const server = restify.createServer({
-  name: config.name,
-  version: config.version,
-});
+const bodyParser = require('body-parser');
 
-/**
- * Middleware
- */
-server.use(restifyPlugins.jsonBodyParser({ mapParams: true }));
-server.use(restifyPlugins.acceptParser(server.acceptable));
-server.use(restifyPlugins.queryParser({ mapParams: true }));
-server.use(restifyPlugins.fullResponse());
+const config = require('./config');
 
-/**
- * Start Server, Connect to DB & Require Routes
- */
-server.listen(config.port, () => {
-  // establish connection to mongodb
-  mongoose.Promise = global.Promise;
-  mongoose.connect(config.db.uri, { useNewUrlParser: true });
+const path = require('path');
 
-  const db = mongoose.connection;
+const categoryRoutes = require("./routes/category");
 
-  db.on('error', (err) => {
-    console.error(err);
-    process.exit(1);
-  });
+mongoose.connect(config.db.uri);
 
-  db.once('open', () => {
-    let routePath = __dirname + '/routes';
-    fs.readdirSync(routePath).forEach(function (file){
-      require(routePath + '/' + file)(server);
-    });
-    console.log(`Server is listening on port ${config.port}`);
-  });
+app.use(express.static(path.join(__dirname, '/dist')));
+
+app.use(bodyParser.json());
+
+app.use(bodyParser.urlencoded({extended: true}));
+
+app.listen(config.port);
+
+console.log('App listening on port ' + config.port);
+
+app.use('/api/category', categoryRoutes);
+
+// app.use(function (req, res, next) {
+//     // Website you wish to allow to connect
+//   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:' + port)
+//
+//     // Request methods you wish to allow
+//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
+//
+//     // Request headers you wish to allow
+//   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
+//
+//     // Pass to next layer of middleware
+//   next()
+// });
+
+app.get('/', function (req, res) {
+  res.sendfile('./dist/index.html');
 });
