@@ -5,6 +5,11 @@
 npm install
 ```
 
+## Run database
+```
+mongod &
+```
+
 ### Compiles and hot-reloads for development
 ```
 npm run serve

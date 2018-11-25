@@ -72,7 +72,11 @@ function jwt() {
   return expressJwt({ secret, isRevoked }).unless({
     path: [
       // public routes that don't require authentication
-      { url: '/api/user/', methods: 'POST' }
+      { url: '/api/user/', methods: 'POST' },
+      { url: '/api/content/', methods: 'GET' },
+      { url: '/api/content/:id', methods: 'GET' },
+      { url: '/api/category/', methods: 'GET' },
+      { url: '/api/category/:id', methods: 'GET' }
     ]
   });
 }
