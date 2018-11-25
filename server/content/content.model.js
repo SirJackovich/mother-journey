@@ -40,5 +40,4 @@ const ContentSchema = new mongoose.Schema(
 ContentSchema.plugin(timestamps);
 ContentSchema.plugin(mongooseStringQuery);
 
-const Content = mongoose.model('content', ContentSchema);
-module.exports = Content;
+module.exports = mongoose.model('content', ContentSchema);

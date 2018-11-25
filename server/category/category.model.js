@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const mongooseStringQuery = require('mongoose-string-query');
 const timestamps = require('mongoose-timestamp');
 
-const RoleSchema = new mongoose.Schema(
+const CategorySchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -12,12 +12,11 @@ const RoleSchema = new mongoose.Schema(
   },
   {
     minimize: false,
-    collection: 'role'
+    collection: 'category'
   },
 );
 
-RoleSchema.plugin(timestamps);
-RoleSchema.plugin(mongooseStringQuery);
+CategorySchema.plugin(timestamps);
+CategorySchema.plugin(mongooseStringQuery);
 
-const Role = mongoose.model('role', RoleSchema);
-module.exports = Role;
+module.exports = mongoose.model('category', CategorySchema);
