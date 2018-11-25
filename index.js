@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const config = require('./config');
 const path = require('path');
+const expressJwt = require('express-jwt');
 const userService = require('./server/user/user.service');
 
 mongoose.connect(config.db.uri, { useNewUrlParser: true });
@@ -14,6 +15,7 @@ app.use(errorHandler);
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors());
+app.use(jwt());
 
 
 app.use(express.static(path.join(__dirname, '/dist')));
@@ -26,7 +28,7 @@ app.use('/api/role', require('./server/role/role.controller'));
 
 app.use('/api/user', require('./server/user/user.controller'));
 
-app.post('/api/auth', authenticate);
+app.use('/api/auth', require('./server/auth/auth.controller'));
 
 app.get('/', function (req, res) {
   res.sendfile('./dist/index.html');
@@ -66,8 +68,24 @@ function errorHandler(err, req, res, next) {
   return res.status(500).json({ message: err.message });
 }
 
-function authenticate(req, res, next) {
-  userService.authenticate(req.body)
-    .then(user => user ? res.json(user) : res.status(400).json({ message: 'Username or password is incorrect' }))
-    .catch(err => next(err));
+function jwt() {
+  const secret = config.secret;
+  return expressJwt({ secret, isRevoked }).unless({
+    path: [
+      // public routes that don't require authentication
+      '/api/auth/',
+      { url: '/api/user/', methods: 'POST' }
+    ]
+  });
+}
+
+async function isRevoked(req, payload, done) {
+  const user = await userService.getById(payload.sub);
+
+  // revoke token if user no longer exists
+  if (!user) {
+    return done(null, true);
+  }
+
+  done();
 }
