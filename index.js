@@ -49,10 +49,14 @@ app.get('/', function (req, res) {
 // Redirect http to https
 function requireHTTPS(req, res, next) {
   // Insecure request
+  console.log(`ENV: ${process.env}`);
+  console.log(`x-forwarded-proto: ${req.get('x-forwarded-proto')}`);
   if (process.env !== 'development' && req.get('x-forwarded-proto') === 'http') {
+
     // Redirect to https://
     return res.redirect('https://' + req.get('host') + req.url);
   }
+  console.log(`x-forwarded-proto: ${req.get('x-forwarded-proto')}`);
 
   next();
 }
