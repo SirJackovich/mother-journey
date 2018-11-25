@@ -24,6 +24,8 @@ app.listen(config.port);
 
 console.log('App listening on port ' + config.port);
 
+app.use(requireHTTPS);
+
 app.use('/api/category', categoryRoutes);
 
 // app.use(function (req, res, next) {
@@ -43,3 +45,14 @@ app.use('/api/category', categoryRoutes);
 app.get('/', function (req, res) {
   res.sendfile('./dist/index.html');
 });
+
+// Redirect http to https
+function requireHTTPS(req, res, next) {
+  // Insecure request
+  if (process.env !== 'development' && req.get('x-forwarded-proto') === 'http') {
+    // Redirect to https://
+    return res.redirect('https://' + req.get('host') + req.url);
+  }
+
+  next();
+}
