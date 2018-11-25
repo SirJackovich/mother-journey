@@ -11,21 +11,19 @@ const userService = require('./server/user/user.service');
 mongoose.connect(config.db.uri, { useNewUrlParser: true });
 
 app.use(requireHTTPS);
-
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors());
-app.use(jwt());
 
 app.use(express.static(path.join(__dirname, '/dist')));
 
-app.use('/api/category', require('./server/category/category.controller'));
+app.use('/api/category', jwt(), require('./server/category/category.controller'));
 
-app.use('/api/content', require('./server/content/content.controller'));
+app.use('/api/content', jwt(), require('./server/content/content.controller'));
 
-app.use('/api/role', require('./server/role/role.controller'));
+app.use('/api/role', jwt(), require('./server/role/role.controller'));
 
-app.use('/api/user', require('./server/user/user.controller'));
+app.use('/api/user', jwt(), require('./server/user/user.controller'));
 
 app.use('/api/auth', require('./server/auth/auth.controller'));
 
@@ -74,8 +72,6 @@ function jwt() {
   return expressJwt({ secret, isRevoked }).unless({
     path: [
       // public routes that don't require authentication
-      '/api/auth/',
-      '/',
       { url: '/api/user/', methods: 'POST' }
     ]
   });
