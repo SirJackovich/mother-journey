@@ -14,6 +14,8 @@ const categoryRoutes = require("./routes/category");
 
 mongoose.connect(config.db.uri);
 
+app.use(requireHTTPS);
+
 app.use(express.static(path.join(__dirname, '/dist')));
 
 app.use(bodyParser.json());
@@ -24,7 +26,7 @@ app.listen(config.port);
 
 console.log('App listening on port ' + config.port);
 
-app.use(requireHTTPS);
+
 
 app.use('/api/category', categoryRoutes);
 
