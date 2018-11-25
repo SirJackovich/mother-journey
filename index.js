@@ -11,12 +11,11 @@ const userService = require('./server/user/user.service');
 mongoose.connect(config.db.uri, { useNewUrlParser: true });
 
 app.use(requireHTTPS);
-app.use(errorHandler);
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors());
 app.use(jwt());
-
 
 app.use(express.static(path.join(__dirname, '/dist')));
 
@@ -33,6 +32,8 @@ app.use('/api/auth', require('./server/auth/auth.controller'));
 app.get('/', function (req, res) {
   res.sendfile('./dist/index.html');
 });
+
+app.use(errorHandler);
 
 app.listen(config.port);
 
