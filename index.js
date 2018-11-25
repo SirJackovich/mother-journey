@@ -74,6 +74,7 @@ function jwt() {
     path: [
       // public routes that don't require authentication
       '/api/auth/',
+      '/',
       { url: '/api/user/', methods: 'POST' }
     ]
   });
