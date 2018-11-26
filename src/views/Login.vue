@@ -1,9 +1,5 @@
 <template>
     <div>
-        <div class="alert alert-info">
-            Username: test<br />
-            Password: test
-        </div>
         <h2>Login</h2>
         <form @submit.prevent="handleSubmit">
             <div class="form-group">
@@ -27,7 +23,7 @@
 
 <script>
   import router from '../router';
-import { userService } from '../_services';
+    import { userService } from '../_services';
 
 export default {
     data () {
@@ -58,14 +54,10 @@ export default {
             }
 
             this.loading = true;
-            userService.login(username, password)
-                .then(
-                    user => router.push(this.returnUrl),
-                    error => {
-                        this.error = error;
-                        this.loading = false;
-                    }
-                );
+            userService.login(username, password).then(user => {
+              router.push(this.returnUrl);
+              document.dispatchEvent(new Event('loggedIn', user));
+            });
         }
     }
 };
