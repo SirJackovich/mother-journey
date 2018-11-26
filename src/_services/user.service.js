@@ -16,9 +16,9 @@ function login(username, password) {
         .then(user => {
             // login successful if there's a user in the response
             if (user) {
-                // store user details and basic auth credentials in local storage
+                // store user details and basic auth credentials in session storage
                 // to keep user logged in between page refreshes
-                localStorage.setItem('user', JSON.stringify(user));
+              sessionStorage.setItem('user', JSON.stringify(user));
             }
 
             return user;
@@ -26,8 +26,8 @@ function login(username, password) {
 }
 
 function logout() {
-    // remove user from local storage to log user out
-    localStorage.removeItem('user');
+    // remove user from session storage to log user out
+  sessionStorage.removeItem('user');
 }
 
 function getAll() {
@@ -59,7 +59,7 @@ function handleResponse(response) {
 
 function authHeader() {
   // return authorization header with basic auth credentials
-  let user = JSON.parse(localStorage.getItem('user'));
+  let user = JSON.parse(sessionStorage.getItem('user'));
 
   if (user && user.token) {
     return { 'Authorization': 'Bearer ' + user.token };
