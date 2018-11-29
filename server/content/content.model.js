@@ -15,7 +15,7 @@ const ContentSchema = new mongoose.Schema(
       required: true,
       trim: true
     },
-    data: {
+    body: {
       type: String,
       required: true,
       trim: true

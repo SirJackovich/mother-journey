@@ -8,9 +8,13 @@
         <li><a href="/resources">Resources</a></li>
         <li><a href="/about">About</a></li>
         <li><a href="/contact">Contact</a></li>
+        <li v-if="isLoggedIn">
+          <router-link  to="/create">Create</router-link>
+        </li>
         <li>
           <a href="" v-if="isLoggedIn" v-on:click="logout">Logout</a>
-          <router-link v-if="!isLoggedIn" to="/login">Login</router-link></li>
+          <router-link v-if="!isLoggedIn" to="/login">Login</router-link>
+        </li>
       </ul>
     </nav>
     <div class="jumbotron">

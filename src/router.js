@@ -1,16 +1,20 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import HomePage from './views/Home'
-import LoginPage from './views/Login'
+import Home from './views/Home'
+import Login from './views/Login'
+import Create from './views/Create'
+import Blog from './views/Blog'
 
 Vue.use(Router);
 
 const router = new Router({
   mode: 'history',
   routes: [
-    { path: '/', component: HomePage },
-    { path: '/login', component: LoginPage },
+    { path: '/', component: Home },
+    { path: '/login', component: Login },
+    { path: '/create', component: Create },
+    { path: '/blog', component: Blog},
 
     // otherwise redirect to home
     { path: '*', redirect: '/' }
@@ -19,7 +23,7 @@ const router = new Router({
 
 // router.beforeEach((to, from, next) => {
 //   // redirect to login page if not logged in and trying to access a restricted page
-//   const publicPages = ['/login'];
+//   const publicPages = ['/login', '/blog', '/'];
 //   const authRequired = !publicPages.includes(to.path);
 //   const loggedIn = sessionStorage.getItem('user');
 //
