@@ -28,7 +28,11 @@ app.use('/api/user', jwt(), require('./server/user/user.controller'));
 app.use('/api/auth', require('./server/auth/auth.controller'));
 
 app.get('/', function (req, res) {
-  res.sendfile('./dist/index.html');
+  res.sendFile(path.join(__dirname, './dist', 'index.html'));
+});
+
+app.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname, './dist', 'index.html'));
 });
 
 app.use(errorHandler);

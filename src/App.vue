@@ -1,22 +1,21 @@
 <template>
   <div id="app">
-    <nav>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/blog">Blog</a></li>
-        <li><a href="/faq">FAQ</a></li>
-        <li><a href="/resources">Resources</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/contact">Contact</a></li>
-        <li v-if="isLoggedIn">
-          <router-link  to="/create">Create</router-link>
-        </li>
-        <li>
-          <a href="" v-if="isLoggedIn" v-on:click="logout">Logout</a>
-          <router-link v-if="!isLoggedIn" to="/login">Login</router-link>
-        </li>
-      </ul>
-    </nav>
+    <b-navbar toggleable="md" type="dark" variant="primary" fixed="top">
+      <b-navbar-brand href="/">This Mother's Journey</b-navbar-brand>
+      <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+      <b-collapse is-nav id="nav_collapse">
+        <b-navbar-nav>
+          <b-nav-item href="/blog">Blog</b-nav-item>
+          <b-nav-item href="/faq">FAQ</b-nav-item>
+          <b-nav-item href="/resources">Resources</b-nav-item>
+          <b-nav-item href="/about">About</b-nav-item>
+          <b-nav-item href="/contact">Contact</b-nav-item>
+          <b-nav-item v-if="isLoggedIn" href="/create">Create</b-nav-item>
+          <b-nav-item v-if="!isLoggedIn" to="/login">Login</b-nav-item>
+          <b-nav-item v-if="isLoggedIn" v-on:click="logout">Logout</b-nav-item>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
     <div class="jumbotron">
       <div class="container">
         <div class="row">
@@ -28,23 +27,8 @@
     </div>
   </div>
 </template>
-<style lang="stylus">
-#app
-  font-family 'Avenir', Helvetica, Arial, sans-serif
-  -webkit-font-smoothing antialiased
-  -moz-osx-font-smoothing grayscale
-  text-align center
-  color #2c3e50
-
-#nav
-  padding 30px
-  a
-    font-weight bold
-    color #2c3e50
-    &.router-link-exact-active
-      color #42b983
-</style>
 <script>
+  import router from './router';
   export default {
     name: 'app',
     data () {
@@ -68,11 +52,11 @@
         this.user = null;
         sessionStorage.removeItem('user');
         evt.stopPropagation();
+        router.push('/');
       }
     },
     computed: {
       isLoggedIn: function() {
-        console.log('USER: ', this.user);
         return !!this.user;
       }
     }

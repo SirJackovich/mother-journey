@@ -1,10 +1,7 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <div>
-      <h1 v-if="user">Hi {{user.username}}!</h1>
-      <p>You're logged in with Vue.js & Basic HTTP Authentication!!</p>
-    </div>
+  <div>
+    <h2>Home</h2>
+    <h3 v-if="user">Hi {{user.username}}!</h3>
   </div>
 </template>
 

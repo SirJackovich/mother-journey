@@ -1,40 +1,46 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
+import About from './views/About'
+import Blog from './views/Blog'
+import Contact from './views/Contact'
+import Create from './views/Create'
+import FAQ from './views/FAQ'
 import Home from './views/Home'
 import Login from './views/Login'
-import Create from './views/Create'
-import Blog from './views/Blog'
+import Resources from "./views/Resources";
 
 Vue.use(Router);
 
 const router = new Router({
   mode: 'history',
   routes: [
+    { path: '/about', component: About},
+    { path: '/blog', component: Blog},
+    { path: '/contact', component: Contact},
+    { path: '/create', component: Create },
+    { path: '/faq', component: FAQ},
     { path: '/', component: Home },
     { path: '/login', component: Login },
-    { path: '/create', component: Create },
-    { path: '/blog', component: Blog},
+    { path: '/resources', component: Resources},
 
     // otherwise redirect to home
     { path: '*', redirect: '/' }
   ]
 });
 
-// router.beforeEach((to, from, next) => {
-//   // redirect to login page if not logged in and trying to access a restricted page
-//   const publicPages = ['/login', '/blog', '/'];
-//   const authRequired = !publicPages.includes(to.path);
-//   const loggedIn = sessionStorage.getItem('user');
-//
-//   if (authRequired && !loggedIn) {
-//     return next({
-//       path: '/login',
-//       query: { returnUrl: to.path }
-//     });
-//   }
-//
-//   next();
-// });
+router.beforeEach((to, from, next) => {
+  const authRequired = to.path.includes('/create');
+  const loggedIn = sessionStorage.getItem('user');
+
+  if (authRequired && !loggedIn) {
+    return next({
+      path: '/login',
+      query: { returnUrl: to.path }
+    });
+  }
+
+  next();
+});
 
 export default router;

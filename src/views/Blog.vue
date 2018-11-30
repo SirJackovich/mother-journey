@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h2>Blog</h2>
     <em v-if="blogs.loading">Loading blogs...</em>
     <ul v-if="blogs.length">
       <div v-for="blog in blogs" :key="blog.id">

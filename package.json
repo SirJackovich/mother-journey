@@ -2,18 +2,18 @@
   "name": "mother-journey",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/SirJackovich/mother-journey.git"
-  },
-  "author": "SirJackovich",
-  "license": "ISC",
-  "homepage": "https://github.com/SirJackovich/mother-journey#readme",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.1.1",
+    "@vue/cli-plugin-unit-mocha": "^3.1.1",
+    "@vue/cli-service": "^3.1.4",
+    "@vue/test-utils": "^1.0.0-beta.20",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
+    "bootstrap-vue": "^2.0.0-rc.11",
     "chai": "^4.1.2",
     "cors": "^2.8.4",
+    "css-loader": "^1.0.1",
     "express": "^4.16.3",
     "express-jwt": "^5.3.1",
     "jsonwebtoken": "^8.2.2",
@@ -21,25 +21,26 @@
     "mongoose": "^5.3.13",
     "mongoose-string-query": "^0.2.5",
     "mongoose-timestamp": "^0.6.0",
+    "pre-commit": "^1.2.2",
     "register-service-worker": "^1.0.0",
     "restify": "^7.2.3",
     "restify-errors": "^6.1.1",
     "restify-plugins": "^1.6.0",
+    "style-loader": "^0.23.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
-    "vue-template-compiler": "^2.5.17",
-    "@vue/cli-service": "^3.1.4",
-    "@vue/cli-plugin-babel": "^3.1.1",
-    "@vue/cli-plugin-unit-mocha": "^3.1.1",
-    "@vue/test-utils": "^1.0.0-beta.20"
+    "vue-template-compiler": "^2.5.17"
   },
   "scripts": {
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "serve": "vue-cli-service serve",
-    "start": "vue-cli-service build && node index.js",
+    "start": "node index.js",
     "test": "vue-cli-service test:unit"
-  }
+  },
+  "pre-commit": [
+    "build"
+  ]
 }
