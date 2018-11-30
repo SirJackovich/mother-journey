@@ -2,7 +2,9 @@
   "name": "mother-journey",
   "version": "1.0.0",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "express": "^4.16.3"
+  },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.1.1",
     "@vue/cli-plugin-unit-mocha": "^3.1.1",
@@ -14,7 +16,6 @@
     "chai": "^4.1.2",
     "cors": "^2.8.4",
     "css-loader": "^1.0.1",
-    "express": "^4.16.3",
     "express-jwt": "^5.3.1",
     "jsonwebtoken": "^8.2.2",
     "mongodb": "^3.0.10",
