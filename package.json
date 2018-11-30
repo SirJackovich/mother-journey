@@ -34,6 +34,7 @@
     "vue-template-compiler": "^2.5.17"
   },
   "scripts": {
+    "preCommit": "vue-cli-service build && git add dist/**/*",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "serve": "vue-cli-service serve",
@@ -41,6 +42,6 @@
     "test": "vue-cli-service test:unit"
   },
   "pre-commit": [
-    "build"
+    "preCommit"
   ]
 }
