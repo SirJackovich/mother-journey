@@ -21,8 +21,10 @@
 </template>
 
 <style lang="stylus">
+  @import "assets/styles/colors.styl"
+
   #app {
-    background-color: #EDEDED;
+    background-color: color-gray;
     * {
       font-family: Noteworthy;
     }
@@ -30,18 +32,20 @@
       display: flex;
       flex-direction: column;
       justify-content: space-around;
-      background-image: url(assets/aaron-burden-heading.jpeg);
+      background-image: url(assets/img/aaron-burden-heading.jpeg);
       background-size: 100%;
       background-repeat: no-repeat;
       height: 364px;
       h1{
+        text-align: center;
+        padding-right: 20%;
         a {
-          color: #160CE8;
+          color: color-blue;
           font-size: 72px;
         }
         a:hover {
           text-decoration: none;
-          color: #160CE8;
+          color: color-blue;
         }
       }
       nav{
@@ -56,13 +60,13 @@
           text-decoration: none;
         }
         .purple-hover:hover {
-          color: #7C00A5;
+          color: color-purple;
         }
         .pink-hover:hover {
-          color: #D6008F;
+          color: color-pink;
         }
         .blue-hover:hover {
-          color: #160CE8;
+          color: color-blue;
         }
       }
     }
