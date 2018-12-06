@@ -1,32 +1,82 @@
 <template>
   <div id="app">
-    <b-navbar toggleable="md" type="dark" variant="primary" fixed="top">
-      <b-navbar-brand href="/">This Mother's Journey</b-navbar-brand>
-      <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-      <b-collapse is-nav id="nav_collapse">
-        <b-navbar-nav>
-          <b-nav-item href="/blog">Blog</b-nav-item>
-          <b-nav-item href="/faq">FAQ</b-nav-item>
-          <b-nav-item href="/resources">Resources</b-nav-item>
-          <b-nav-item href="/about">About</b-nav-item>
-          <b-nav-item href="/contact">Contact</b-nav-item>
-          <b-nav-item v-if="isLoggedIn" href="/create">Create</b-nav-item>
-          <b-nav-item v-if="!isLoggedIn" to="/login">Login</b-nav-item>
-          <b-nav-item v-if="isLoggedIn" v-on:click="logout">Logout</b-nav-item>
-        </b-navbar-nav>
-      </b-collapse>
-    </b-navbar>
-    <div class="jumbotron">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-6 offset-sm-3">
-            <router-view></router-view>
-          </div>
-        </div>
-      </div>
-    </div>
+    <header>
+        <h1><router-link to="/">This Mother's Journey</router-link></h1>
+        <nav>
+          <router-link class="purple-hover" to="/about">About</router-link>
+          <router-link class="pink-hover" to="/blog">Blog</router-link>
+          <router-link class="blue-hover" to="/resources">Resources</router-link>
+          <router-link class="purple-hover" to="/faq">FAQ</router-link>
+          <router-link class="pink-hover" to="/contact">Contact</router-link>
+          <!--<router-link v-if="isLoggedIn" href="/create">Create</router-link>-->
+          <!--<router-link v-if="!isLoggedIn" to="/login">Login</router-link>-->
+          <!--<router-link v-if="isLoggedIn" v-on:click="logout">Logout</router-link>-->
+        </nav>
+    </header>
+    <router-view></router-view>
+    <footer>
+      <p>Photo Credit: Aaron Burden on Unsplash, Website made by Jackovich Computing</p>
+    </footer>
   </div>
 </template>
+
+<style lang="stylus">
+  #app {
+    background-color: #EDEDED;
+    * {
+      font-family: Noteworthy;
+    }
+    header {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      background-image: url(assets/aaron-burden-heading.jpeg);
+      background-size: 100%;
+      background-repeat: no-repeat;
+      height: 364px;
+      h1{
+        a {
+          color: #160CE8;
+          font-size: 72px;
+        }
+        a:hover {
+          text-decoration: none;
+          color: #160CE8;
+        }
+      }
+      nav{
+        display: flex;
+        justify-content: space-around;
+        a {
+          color: white;
+          font-weight: bold;
+          font-size: 20px;
+        }
+        a:hover {
+          text-decoration: none;
+        }
+        .purple-hover:hover {
+          color: #7C00A5;
+        }
+        .pink-hover:hover {
+          color: #D6008F;
+        }
+        .blue-hover:hover {
+          color: #160CE8;
+        }
+      }
+    }
+    footer{
+      p{
+        text-align: center;
+        font-family: Calibri, sans-serif;
+        font-size: 14px;
+        color: black;
+      }
+    }
+  }
+</style>
+
 <script>
   import router from './router';
   export default {
