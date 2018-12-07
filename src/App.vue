@@ -15,20 +15,17 @@
     </header>
     <router-view></router-view>
     <footer>
-      <p>Photo Credit: Aaron Burden on Unsplash, Website made by Jackovich Computing</p>
+      <p>Heading Photo by <a href="https://unsplash.com/photos/-3Dc-I-65ug?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Aaron Burden</a> on <a href="https://unsplash.com/search/photos/hot-air-balloon?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></p>
+      <p>©2018 by This Mother's Journey</p>
     </footer>
   </div>
 </template>
 
 <style lang="stylus">
-  @import "assets/styles/colors.styl"
+  @import "assets/styles/common.styl"
 
   #app {
     background-color: color-gray;
-    * {
-      font-family: Noteworthy;
-      text-align: center;
-    }
     header {
       display: flex;
       flex-direction: column;
@@ -37,6 +34,7 @@
       background-size: 100%;
       background-repeat: no-repeat;
       height: 364px;
+      margin-bottom: 50px;
       h1{
         padding-right: 20%;
         a {
@@ -59,13 +57,19 @@
         a:hover {
           text-decoration: none;
         }
-        .purple-hover:hover {
+        .purple-hover:hover,
+        .purple-hover.router-link-active,
+        .purple-hover.router-link-exact-active {
           color: color-purple;
         }
-        .pink-hover:hover {
+        .pink-hover:hover
+        .pink-hover.router-link-active,
+        .pink-hover.router-link-exact-active {
           color: color-pink;
         }
-        .blue-hover:hover {
+        .blue-hover:hover
+        .blue-hover.router-link-active,
+        .blue-hover.router-link-exact-active {
           color: color-blue;
         }
       }
@@ -74,6 +78,7 @@
       p{
         font-family: Calibri, sans-serif;
         font-size: 14px;
+        margin: 0;
       }
     }
   }

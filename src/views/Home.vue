@@ -25,7 +25,7 @@
 </template>
 
 <style lang="stylus">
-  @import "../assets/styles/colors.styl"
+  @import "../assets/styles/common.styl"
 
   #home{
     .boxes {
@@ -34,17 +34,13 @@
       color: white;
       font-weight: bold;
       text-shadow: 0 0 5px black;
-      padding: 50px 0;
+      padding-bottom: 50px;
 
       .box {
         border-radius: 15px;
         height: 300px;
         width: 300px;
         padding: 40px 10px 10px 10px;
-
-        h2 {
-          font-size: 40px;
-        }
 
         p {
           font-size: 24px;
@@ -65,11 +61,6 @@
     }
     .learn-more {
       background-color: color-purple;
-      color: white;
-      font-size: 18px;
-      border-radius: 15px;
-      padding: 8px 35px;
-      margin-bottom: 50px;
     }
   }
 </style>
