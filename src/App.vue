@@ -3,6 +3,7 @@
     <header>
         <h1><router-link to="/">This Mother's Journey</router-link></h1>
         <nav>
+          <router-link class="blue-hover" to="/">Home</router-link>
           <router-link class="purple-hover" to="/about">About</router-link>
           <router-link class="pink-hover" to="/blog">Blog</router-link>
           <router-link class="blue-hover" to="/resources">Resources</router-link>
@@ -58,17 +59,14 @@
           text-decoration: none;
         }
         .purple-hover:hover,
-        .purple-hover.router-link-active,
         .purple-hover.router-link-exact-active {
           color: color-purple;
         }
         .pink-hover:hover
-        .pink-hover.router-link-active,
         .pink-hover.router-link-exact-active {
           color: color-pink;
         }
         .blue-hover:hover
-        .blue-hover.router-link-active,
         .blue-hover.router-link-exact-active {
           color: color-blue;
         }

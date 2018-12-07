@@ -42,6 +42,10 @@
         width: 300px;
         padding: 40px 10px 10px 10px;
 
+        h2 {
+          padding: 0;
+        }
+
         p {
           font-size: 24px;
         }
