@@ -6,23 +6,19 @@
         <div class="form-group">
           <label htmlFor="name">Name</label>
           <input type="text" v-model="name" name="name" class="form-control" :class="{ 'is-invalid': submitted && !name }" />
-          <div v-show="submitted && !name" class="invalid-feedback">Name is required</div>
         </div>
         <div class="form-group">
           <label htmlFor="email" class="email">Email</label>
           <input type="text" v-model="email" name="email" class="form-control" :class="{ 'is-invalid': submitted && !email }" />
-          <div v-show="submitted && !email" class="invalid-feedback">Email is required</div>
         </div>
       </div>
       <div class="form-group">
         <label htmlFor="subject">Subject</label>
         <input type="text" v-model="subject" name="subject" class="form-control" :class="{ 'is-invalid': submitted && !subject }" />
-        <div v-show="submitted && !subject" class="invalid-feedback">Subject is required</div>
       </div>
       <div class="form-group">
         <label htmlFor="message">Message</label>
         <textarea type="text" v-model="message" name="message" class="form-control" :class="{ 'is-invalid': submitted && !message }"></textarea>
-        <div v-show="submitted && !message" class="invalid-feedback">Message is required</div>
       </div>
       <div class="form-group">
         <button :disabled="loading">Send</button>
@@ -55,6 +51,9 @@
           padding-left: 40px;
           padding-right: 10px;
         }
+        .is-invalid {
+          border-color: red;
+        }
         label {
           max-width: 100px;
           font-size: 24px;
@@ -63,6 +62,9 @@
         }
         textarea {
           height: 300px;
+        }
+        input {
+          height: 50px;
         }
         input,
         textarea {
@@ -107,6 +109,7 @@
 
         // stop here if form is invalid
         if (!(name && email && subject && message)) {
+          alert("Invalid entry");
           return;
         }
 

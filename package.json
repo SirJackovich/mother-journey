@@ -17,7 +17,6 @@
   "devDependencies": {
     "@vue/cli-service": "^3.1.4",
     "pre-commit": "^1.2.2",
-    "nodemon": "^1.18.7",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "vue": "^2.5.17",
@@ -26,7 +25,6 @@
   },
   "scripts": {
     "build": "vue-cli-service build",
-    "dev": "nodemon index.js",
     "preCommit": "vue-cli-service build && git add dist/*",
     "serve": "vue-cli-service serve",
     "start": "node index.js"

@@ -5,12 +5,12 @@
       <div class="form-group">
         <label htmlFor="title">Title</label>
         <input type="text" v-model="title" name="title" class="form-control" :class="{ 'is-invalid': submitted && !title }" />
-        <div v-show="submitted && !title" class="invalid-feedback">Title is required</div>
+        <div v-show="submitted && !title" class="invalid">Title is required</div>
       </div>
       <div class="form-group">
         <label htmlFor="body">Body</label>
         <input type="text" v-model="body" name="body" class="form-control" :class="{ 'is-invalid': submitted && !body }" />
-        <div v-show="submitted && !body" class="invalid-feedback">Body is required</div>
+        <div v-show="submitted && !body" class="invalid">Body is required</div>
       </div>
       <div class="form-group">
         <button class="btn btn-primary" :disabled="loading">Create</button>
