@@ -1,25 +1,56 @@
 <template>
-  <div>
+  <div id="create">
     <h2>Create</h2>
     <form @submit.prevent="handleSubmit">
       <div class="form-group">
         <label htmlFor="title">Title</label>
         <input type="text" v-model="title" name="title" class="form-control" :class="{ 'is-invalid': submitted && !title }" />
-        <div v-show="submitted && !title" class="invalid">Title is required</div>
       </div>
       <div class="form-group">
-        <label htmlFor="body">Body</label>
-        <input type="text" v-model="body" name="body" class="form-control" :class="{ 'is-invalid': submitted && !body }" />
-        <div v-show="submitted && !body" class="invalid">Body is required</div>
+        <label htmlFor="quote">Quote</label>
+        <textarea type="text" v-model="quote" name="quote" class="form-control quote" :class="{ 'is-invalid': submitted && !quote }"></textarea>
       </div>
       <div class="form-group">
-        <button class="btn btn-primary" :disabled="loading">Create</button>
-        <img v-show="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+        <label htmlFor="content">Content</label>
+        <textarea type="text" v-model="content" name="content" class="form-control" :class="{ 'is-invalid': submitted && !content }"></textarea>
+      </div>
+      <div class="form-group">
+        <label htmlFor="photo">Photo</label>
+        <input type="text" v-model="photo" name="photo" class="form-control" :class="{ 'is-invalid': submitted && !photo }" />
+      </div>
+      <div class="form-group">
+        <label htmlFor="credit">Credit</label>
+        <input type="text" v-model="credit" name="credit" class="form-control" :class="{ 'is-invalid': submitted && !credit }" />
+      </div>
+      <div class="form-group">
+        <button :disabled="loading" class="cancel">Cancel</button>
+        <button :disabled="loading">Publish</button>
       </div>
       <div v-if="error" class="alert alert-danger">{{error}}</div>
     </form>
   </div>
 </template>
+
+<style lang="stylus">
+  @import "../assets/styles/common.styl"
+
+  #create{
+    h2 {
+      color: color-pink;
+    }
+    form {
+      padding: 0 110px;
+      .form-group {
+        .quote {
+          height: 200px;
+        }
+        .cancel {
+          margin-right: 85px;
+        }
+      }
+    }
+  }
+</style>
 
 <script>
   import { contentService } from '../_services';
@@ -29,7 +60,10 @@
     data () {
       return {
         title: '',
-        body: '',
+        quote: '',
+        content: '',
+        photo: '',
+        credit: '',
         submitted: false,
         loading: false,
         error: ''
@@ -38,17 +72,15 @@
     methods: {
       handleSubmit (e) {
         this.submitted = true;
-        const { title, body } = this;
+        const { title, quote, content, photo, credit } = this;
 
         // stop here if form is invalid
-        if (!(title && body)) {
+        if (!(title && quote && content && photo && credit)) {
           return;
         }
 
         this.loading = true;
-        contentService.create(title, body).then(content => {
-          router.push('/blog');
-        });
+        contentService.create(title, quote, content, photo, credit).then(router.push('/blog'));
       }
     }
   };

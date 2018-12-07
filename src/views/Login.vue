@@ -27,37 +27,11 @@
       color: color-blue;
     }
     form {
-      display: flex;
-      flex-direction: column;
       width: 600px;
       margin: auto;
       .form-group {
-        display: flex;
-        justify-content: flex-end;
-        flex-grow: 1;
-        .is-invalid {
-          border-color: red;
-        }
         label {
-          max-width: 100px;
-          font-size: 24px;
-          color: color-purple;
-          width: 118px;
           padding-right: 20px
-        }
-        input{
-          border-color: color-green;
-          background-color: color-gray;
-          border-radius: 10px;
-          text-align: left;
-          height: 50px;
-        }
-        input:focus,
-        input:hover{
-          background-color: white;
-        }
-        button {
-          background-color: color-green;
         }
       }
     }

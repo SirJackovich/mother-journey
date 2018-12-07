@@ -37,50 +37,14 @@
       color: color-pink;
     }
     form {
-      display: flex;
-      flex-direction: column;
       padding: 0 110px;
       .sender {
         display: flex;
       }
       .form-group {
-        display: flex;
-        justify-content: flex-end;
-        flex-grow: 1;
         .email {
           padding-left: 40px;
           padding-right: 10px;
-        }
-        .is-invalid {
-          border-color: red;
-        }
-        label {
-          max-width: 100px;
-          font-size: 24px;
-          color: color-purple;
-          width: 118px;
-        }
-        textarea {
-          height: 300px;
-        }
-        input {
-          height: 50px;
-        }
-        input,
-        textarea {
-          border-color: color-green;
-          background-color: color-gray;
-          border-radius: 10px;
-          text-align: left;
-        }
-        input:focus,
-        input:hover,
-        textarea:focus,
-        textarea:hover{
-          background-color: white;
-        }
-        button {
-          background-color: color-green;
         }
       }
     }
