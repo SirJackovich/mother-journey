@@ -16,15 +16,15 @@
       </div>
       <div class="form-group">
         <label htmlFor="photo">Photo</label>
-        <input type="text" v-model="photo" name="photo" class="form-control" :class="{ 'is-invalid': submitted && !photo }" />
+        <vue-dropzone ref="myVueDropzone" id="dropzone" name="photo" class="form-control" :options="dropzoneOptions"></vue-dropzone>
       </div>
       <div class="form-group">
         <label htmlFor="credit">Credit</label>
         <input type="text" v-model="credit" name="credit" class="form-control" :class="{ 'is-invalid': submitted && !credit }" />
       </div>
       <div class="form-group">
-        <button :disabled="loading" class="cancel">Cancel</button>
-        <button :disabled="loading">Publish</button>
+        <button :disabled="loading" class="cancel button">Cancel</button>
+        <button :disabled="loading" class="button" >Publish</button>
       </div>
       <div v-if="error" class="alert alert-danger">{{error}}</div>
     </form>
@@ -47,6 +47,25 @@
         .cancel {
           margin-right: 85px;
         }
+        .vue-dropzone {
+          height: 100%;
+          background-image: url(../assets/img/upload-arrow.png);
+          background-repeat: no-repeat;
+          background-position: center 20%;
+          background-size: 50px;
+          text-align: center;
+          .upload {
+            margin-top: 100px;
+            background-color: color-light-blue;
+          }
+          p {
+            color: color-pink;
+            font-size: 18px;
+          }
+        }
+        .vue-dropzone.dz-started {
+          background-image: none;
+        }
       }
     }
   }
@@ -55,10 +74,22 @@
 <script>
   import { contentService } from '../_services';
   import router from '../router';
+  import vue2Dropzone from 'vue2-dropzone';
+  import 'vue2-dropzone/dist/vue2Dropzone.min.css';
 
   export default {
+    components: {
+      vueDropzone: vue2Dropzone
+    },
     data () {
       return {
+        dropzoneOptions: {
+          url: 'http://localhost:5000/upload',
+          thumbnailWidth: 150,
+          maxFilesize: 0.5,
+          headers: { "My-Awesome-Header": "header value" },
+          dictDefaultMessage: "<button class='button upload' type='button'>Upload Photo</button><p>Or drag photo here</p>"
+        },
         title: '',
         quote: '',
         content: '',

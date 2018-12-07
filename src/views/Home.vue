@@ -14,7 +14,7 @@
         <p>Provide resources and information, emotional support and comic relief.</p>
       </div>
     </div>
-    <router-link class="learn-more" to="/about" tag="button">Learn More</router-link>
+    <router-link class="learn-more button" to="/about" tag="button">Learn More</router-link>
     <div>
       <h2 v-if="blogs.length" >Recent Posts:</h2>
       <div class="blog-box" v-for="blog in blogs" :key="blog.id">
