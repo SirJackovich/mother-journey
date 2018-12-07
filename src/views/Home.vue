@@ -14,7 +14,13 @@
         <p>Provide resources and information, emotional support and comic relief.</p>
       </div>
     </div>
-    <button>Learn More</button>
+    <router-link class="learn-more" to="/about" tag="button">Learn More</router-link>
+    <div>
+      <h2 v-if="blogs.length" >Recent Posts:</h2>
+      <div class="blog-box" v-for="blog in blogs" :key="blog.id">
+        <p>{{blog.title}}</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -28,13 +34,12 @@
       color: white;
       font-weight: bold;
       text-shadow: 0 0 5px black;
-      padding: 40px 0;
+      padding: 50px 0;
 
       .box {
-        border-radius: 25px;
+        border-radius: 15px;
         height: 300px;
         width: 300px;
-        text-align: center;
         padding: 40px 10px 10px 10px;
 
         h2 {
@@ -58,10 +63,28 @@
         background-color: color-blue;
       }
     }
+    .learn-more {
+      background-color: color-purple;
+      color: white;
+      font-size: 18px;
+      border-radius: 15px;
+      padding: 8px 35px;
+      margin-bottom: 50px;
+    }
   }
 </style>
 
 <script>
+  import { contentService } from '../_services';
+
   export default {
+    data () {
+      return {
+        blogs: []
+      }
+    },
+    created () {
+      contentService.getAll().then(blogs => this.blogs = blogs.reverse().slice(0, 2));
+    }
   };
 </script>

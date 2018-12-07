@@ -27,6 +27,7 @@
     background-color: color-gray;
     * {
       font-family: Noteworthy;
+      text-align: center;
     }
     header {
       display: flex;
@@ -37,7 +38,6 @@
       background-repeat: no-repeat;
       height: 364px;
       h1{
-        text-align: center;
         padding-right: 20%;
         a {
           color: color-blue;
@@ -72,10 +72,8 @@
     }
     footer{
       p{
-        text-align: center;
         font-family: Calibri, sans-serif;
         font-size: 14px;
-        color: black;
       }
     }
   }
