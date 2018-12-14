@@ -70,7 +70,7 @@
 </style>
 
 <script>
-  import { contentService } from '../_services';
+  import { blogService } from '../_services';
 
   export default {
     data () {
@@ -79,7 +79,7 @@
       }
     },
     created () {
-      contentService.getAll().then(blogs => this.blogs = blogs.reverse().slice(0, 2));
+      blogService.getAll().then(blogs => this.blogs = blogs.reverse().slice(0, 2));
     }
   };
 </script>

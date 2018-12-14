@@ -72,7 +72,7 @@
 </style>
 
 <script>
-  import { contentService } from '../_services';
+  import { blogService } from '../_services';
   import { authHeader} from '../_helpers';
   import vue2Dropzone from 'vue2-dropzone';
   import 'vue2-dropzone/dist/vue2Dropzone.min.css';
@@ -96,6 +96,7 @@
         quote: '',
         content: '',
         credit: '',
+        path: '',
         submitted: false,
         loading: false,
         error: ''
@@ -115,7 +116,8 @@
       },
       afterComplete(file) {
         let photo = file.xhr.response;
-        contentService.create(this.title, this.quote, photo, this.content, this.credit);
+        this.path = this.title.toLowerCase().replace(/\s+/g, '-');
+        blogService.create(this.title, this.quote, photo, this.content, this.credit, this.path);
       }
     }
   };

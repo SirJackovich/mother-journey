@@ -1,13 +1,14 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import About from './views/About'
-import Blog from './views/Blog'
-import Contact from './views/Contact'
-import Create from './views/Create'
-import FAQ from './views/FAQ'
-import Home from './views/Home'
-import Login from './views/Login'
+import About from './views/About';
+import Blog from './views/Blog';
+import Post from './views/Post';
+import Contact from './views/Contact';
+import Create from './views/Create';
+import FAQ from './views/FAQ';
+import Home from './views/Home';
+import Login from './views/Login';
 import Resources from "./views/Resources";
 
 Vue.use(Router);
@@ -17,6 +18,7 @@ const router = new Router({
   routes: [
     { path: '/about', component: About},
     { path: '/blog', component: Blog},
+    { path: '/blog/:path', component: Post},
     { path: '/contact', component: Contact},
     { path: '/create', component: Create },
     { path: '/faq', component: FAQ},

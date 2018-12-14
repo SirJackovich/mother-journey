@@ -1,4 +1,4 @@
-import { handleResponse } from '../_helpers';
+import { handleResponse, logout } from '../_helpers';
 
 export const userService = {
   login,
@@ -24,9 +24,4 @@ function login(username, password) {
 
       return user;
     });
-}
-
-function logout() {
-  // remove user from session storage to log user out
-  sessionStorage.removeItem('user');
 }

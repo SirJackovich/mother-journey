@@ -12,7 +12,7 @@
 </template>
 
 <script>
-  import { contentService } from '../_services';
+  import { blogService } from '../_services';
   export default {
     data () {
       return {
@@ -21,7 +21,7 @@
     },
     created () {
       this.blogs.loading = true;
-      contentService.getAll().then(blogs => this.blogs = blogs.reverse());
+      blogService.getAll().then(blogs => this.blogs = blogs.reverse());
     }
   };
 </script>

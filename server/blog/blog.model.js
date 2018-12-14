@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const mongooseStringQuery = require('mongoose-string-query');
 const timestamps = require('mongoose-timestamp');
 
-const ContentSchema = new mongoose.Schema(
+const BlogSchema = new mongoose.Schema(
   {
     author: {
       type: String,
@@ -15,7 +15,7 @@ const ContentSchema = new mongoose.Schema(
       required: true,
       trim: true
     },
-    body: {
+    content: {
       type: String,
       required: true,
       trim: true
@@ -28,7 +28,8 @@ const ContentSchema = new mongoose.Schema(
     title: {
       type: String,
       required: true,
-      trim: true
+      trim: true,
+      unique : true
     },
     quote: {
       type: String,
@@ -44,15 +45,21 @@ const ContentSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true
+    },
+    path: {
+      type: String,
+      required: true,
+      trim: true,
+      unique : true
     }
   },
   {
     minimize: false,
-    collection: 'content'
+    collection: 'blog'
   },
 );
 
-ContentSchema.plugin(timestamps);
-ContentSchema.plugin(mongooseStringQuery);
+BlogSchema.plugin(timestamps);
+BlogSchema.plugin(mongooseStringQuery);
 
-module.exports = mongoose.model('content', ContentSchema);
+module.exports = mongoose.model('blog', BlogSchema);
