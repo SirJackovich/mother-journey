@@ -17,17 +17,19 @@ app.use(cors());
 
 app.use(express.static(path.join(__dirname, '/dist')));
 
+app.use('/api/auth', require('./server/auth/auth.controller'));
+
 app.use('/api/category', jwt(), require('./server/category/category.controller'));
 
 app.use('/api/content', jwt(), require('./server/content/content.controller'));
 
+app.use('/api/image', jwt(), require('./server/image/image.controller'));
+
+app.use('/api/email', require('./server/email/email.controller'));
+
 app.use('/api/role', jwt(), require('./server/role/role.controller'));
 
 app.use('/api/user', jwt(), require('./server/user/user.controller'));
-
-app.use('/api/auth', require('./server/auth/auth.controller'));
-
-app.use('/api/email', require('./server/email/email.controller'));
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, './dist', 'index.html'));

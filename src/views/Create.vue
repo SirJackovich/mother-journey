@@ -16,14 +16,14 @@
       </div>
       <div class="form-group">
         <label htmlFor="photo">Photo</label>
-        <vue-dropzone ref="myVueDropzone" id="dropzone" name="photo" class="form-control" :options="dropzoneOptions"></vue-dropzone>
+        <vue-dropzone ref="myVueDropzone" id="dropzone" @vdropzone-complete="afterComplete" name="photo" class="form-control" :options="dropzoneOptions"></vue-dropzone>
       </div>
       <div class="form-group">
         <label htmlFor="credit">Credit</label>
         <input type="text" v-model="credit" name="credit" class="form-control" :class="{ 'is-invalid': submitted && !credit }" />
       </div>
       <div class="form-group">
-        <button :disabled="loading" class="cancel button">Cancel</button>
+        <button :disabled="loading" type='button' class="cancel button">Cancel</button>
         <button :disabled="loading" class="button" >Publish</button>
       </div>
       <div v-if="error" class="alert alert-danger">{{error}}</div>
@@ -73,7 +73,7 @@
 
 <script>
   import { contentService } from '../_services';
-  import router from '../router';
+  import { authHeader} from '../_helpers';
   import vue2Dropzone from 'vue2-dropzone';
   import 'vue2-dropzone/dist/vue2Dropzone.min.css';
 
@@ -84,16 +84,17 @@
     data () {
       return {
         dropzoneOptions: {
-          url: 'http://localhost:5000/upload',
-          thumbnailWidth: 150,
-          maxFilesize: 0.5,
-          headers: { "My-Awesome-Header": "header value" },
+          headers: { 'Authorization': authHeader()},
+          url: 'api/image/',
+          addRemoveLinks: true,
+          autoProcessQueue: false,
+          maxFiles: 1,
+          acceptedFiles: 'image/*',
           dictDefaultMessage: "<button class='button upload' type='button'>Upload Photo</button><p>Or drag photo here</p>"
         },
         title: '',
         quote: '',
         content: '',
-        photo: '',
         credit: '',
         submitted: false,
         loading: false,
@@ -103,15 +104,18 @@
     methods: {
       handleSubmit (e) {
         this.submitted = true;
-        const { title, quote, content, photo, credit } = this;
 
         // stop here if form is invalid
-        if (!(title && quote && content && photo && credit)) {
+        if (!(this.title && this.quote && this.content)) {
           return;
         }
 
         this.loading = true;
-        contentService.create(title, quote, content, photo, credit).then(router.push('/blog'));
+        this.$refs.myVueDropzone.processQueue();
+      },
+      afterComplete(file) {
+        let photo = file.xhr.response;
+        contentService.create(this.title, this.quote, photo, this.content, this.credit);
       }
     }
   };

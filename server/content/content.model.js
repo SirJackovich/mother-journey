@@ -29,6 +29,21 @@ const ContentSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true
+    },
+    quote: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    credit: {
+      type: String,
+      required: false,
+      trim: true
+    },
+    photo: {
+      type: String,
+      required: true,
+      trim: true
     }
   },
   {

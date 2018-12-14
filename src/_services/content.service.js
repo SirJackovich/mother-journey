@@ -5,11 +5,11 @@ export const contentService = {
   getAll
 };
 
-function create(title, body) {
+function create(title, quote, photo, body, credit) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': authHeader() },
-        body: JSON.stringify({ title, body })
+        body: JSON.stringify({ title, quote, photo, body, credit })
     };
 
     return fetch(`/api/content/`, requestOptions)
