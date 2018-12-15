@@ -44,6 +44,7 @@
 
         h2 {
           padding: 0;
+          font-size: 40px;
         }
 
         p {

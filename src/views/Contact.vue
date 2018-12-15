@@ -1,6 +1,6 @@
 <template>
   <div id="contact">
-    <h2>Contact</h2>
+    <h2>Contact Me</h2>
     <form @submit.prevent="handleSubmit">
       <div class="sender">
         <div class="form-group">
@@ -34,6 +34,7 @@
   #contact{
     h2 {
       color: color-pink;
+      font-size: 40px;
     }
     form {
       padding: 0 110px;

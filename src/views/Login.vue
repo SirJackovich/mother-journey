@@ -25,6 +25,7 @@
   #login{
     h2 {
       color: color-blue;
+      font-size: 40px;
     }
     form {
       width: 600px;

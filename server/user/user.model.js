@@ -13,11 +13,6 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true
-    },
-    roles: {
-      type: Array,
-      required: false,
-      trim: true
     }
   },
   {

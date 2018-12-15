@@ -27,8 +27,6 @@ app.use('/api/image', require('./server/image/image.controller'));
 
 app.use('/api/email', require('./server/email/email.controller'));
 
-app.use('/api/role', require('./server/role/role.controller'));
-
 app.use('/api/user', require('./server/user/user.controller'));
 
 app.get('/', function (req, res) {

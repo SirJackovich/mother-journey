@@ -37,6 +37,7 @@
   #create{
     h2 {
       color: color-pink;
+      font-size: 40px;
     }
     form {
       padding: 0 110px;
