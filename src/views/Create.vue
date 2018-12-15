@@ -61,7 +61,6 @@
           }
           p {
             color: color-pink;
-            font-size: 18px;
           }
         }
         .vue-dropzone.dz-started {

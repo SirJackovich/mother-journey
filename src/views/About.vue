@@ -43,7 +43,6 @@
       padding: 0 110px;
       p {
         text-align: left;
-        font-size: 18px;
         color: color-pink;
         padding-bottom: 50px;
       }
@@ -66,15 +65,8 @@
     }
     .banner {
       background-color: color-light-blue;
-      margin: 50px 0;
-      h3 {
-        color: white;
-        padding-top: 50px;
-        padding-bottom: 20px;
-      }
       .button {
         background-color: color-light-blue;
-        border-color: white;
       }
     }
   }
