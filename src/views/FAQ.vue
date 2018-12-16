@@ -72,46 +72,27 @@
     data() {
       return {
         questions: [
-          // {
-          //   title: "Special Needs",
-          //   questions: [
-          //     {
-          //       question: "What is the most important thing that you wished you had known sooner as a parent of a child with special needs?",
-          //       answer: "How to pain the rainbow purple and blue.",
-          //       showing: false
-          //     },
-          //     {
-          //       question: "What is the most important thing that you wished you had known sooner as a parent of a child with special needs?",
-          //       answer: "How to pain the rainbow purple and blue.",
-          //       showing: false
-          //     },
-          //     {
-          //       question: "What is the most important thing that you wished you had known sooner as a parent of a child with special needs?",
-          //       answer: "How to pain the rainbow purple and blue.",
-          //       showing: false
-          //     }
-          //   ]
-          // },
-          // {
-          //   title: "School System",
-          //   questions: [
-          //     {
-          //       question: "What is the most important thing that you wished you had known sooner as a parent of a child with special needs?",
-          //       answer: "How to pain the rainbow purple and blue.",
-          //       showing: false
-          //     },
-          //     {
-          //       question: "What is the most important thing that you wished you had known sooner as a parent of a child with special needs?",
-          //       answer: "How to pain the rainbow purple and blue.",
-          //       showing: false
-          //     },
-          //     {
-          //       question: "What is the most important thing that you wished you had known sooner as a parent of a child with special needs?",
-          //       answer: "How to pain the rainbow purple and blue.",
-          //       showing: false
-          //     }
-          //   ]
-          // },
+          {
+            title: "Special Needs",
+            questions: [
+              {
+                question: "What is the most important thing that you wish you had known sooner as a parent of a child with special needs?",
+                answer: "I wish I would have know more of my options with the school system. I had no idea what my options were, and it seemed almost like it was a secret.",
+                showing: false
+              }
+            ]
+          },
+          {
+            title: "School System",
+            questions: [
+              {
+                question: "How often should you communicate with your student’s teacher and others involved in your child’s educational plan?",
+                answer: "IEPs and 504 Plans are renewed yearly. If changes are needed, the plans can be visited at any point one of the adults involved deems necessary. " +
+                  "If you start at the beginning with open communication, the child will have a more successful year.",
+                showing: false
+              }
+            ]
+          },
           {
             title: "Personal",
             questions: [

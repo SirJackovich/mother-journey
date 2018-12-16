@@ -1,9 +1,17 @@
 <template>
-  <div>
+  <div id="post">
     <h2>{{post.title}}</h2>
     <img :src="post.photo">
   </div>
 </template>
+
+<style lang="stylus">
+  @import "../assets/styles/common.styl"
+
+  #post{
+
+  }
+</style>
 
 <script>
   import { blogService} from '../_services';

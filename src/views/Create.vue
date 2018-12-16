@@ -74,6 +74,7 @@
 <script>
   import { blogService } from '../_services';
   import { authHeader} from '../_helpers';
+  import router from '../router';
   import vue2Dropzone from 'vue2-dropzone';
   import 'vue2-dropzone/dist/vue2Dropzone.min.css';
 
@@ -117,7 +118,9 @@
       afterComplete(file) {
         let photo = file.xhr.response;
         this.path = this.title.toLowerCase().replace(/\s+/g, '-');
-        blogService.create(this.title, this.quote, photo, this.content, this.credit, this.path);
+        blogService.create(this.title, this.quote, photo, this.content, this.credit, this.path).then(
+          router.push(`/blog/${this.path}`)
+        );
       }
     }
   };
