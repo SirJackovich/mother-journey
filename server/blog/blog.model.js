@@ -20,11 +20,6 @@ const BlogSchema = new mongoose.Schema(
       required: true,
       trim: true
     },
-    published: {
-      type: String,
-      required: false,
-      trim: true
-    },
     title: {
       type: String,
       required: true,
