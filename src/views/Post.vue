@@ -1,7 +1,10 @@
 <template>
   <div id="post">
     <section>
-      <h2>{{post.title}}</h2>
+      <h2>
+        {{post.title}}
+        <button type="submit"><img src="../assets/img/edit-icon.svg"></button>
+      </h2>
       <p>{{post.quote}}</p>
       <p class="date">
         <span>Published on: {{post.createdAt}}</span>
@@ -14,9 +17,10 @@
           </vue-goodshare-pinterest>
         </span>
       </p>
-      <div class="content">
-        <img :src="post.photo">
-        <p v-html="post.content"></p>
+      <p><img class="post-image" :src="post.photo"><span v-html="post.content"></span></p>
+      <div class="paging">
+        <button class="button" ><img class="arrow left" src="../assets/img/right-arrow.svg">Newer Post</button>
+        <button class="button" >Older Post<img class="arrow" src="../assets/img/right-arrow.svg"></button>
       </div>
     </section>
     <aside>
@@ -56,6 +60,14 @@
       h2 {
         font-size: 40px;
         padding-bottom: 20px;
+        button{
+          border: none;
+          background-color: transparent;
+          cursor: pointer;
+          img {
+            height: 35px;
+          }
+        }
       }
       .date {
         text-align: left;
@@ -68,17 +80,32 @@
           color: white;
         }
       }
-      .content{
-        display:flex;
-        align-items: start;
-        p {
-          text-align: left;
-        }
-        img {
-          width: 600px;
-          padding-right: 50px;
-          flex-grow:0;
-          flex-shrink:0;
+      p {
+        text-align: left;
+      }
+      .post-image {
+        max-width: 600px;
+        max-height: 600px;
+        padding-right: 50px;
+        height: inherit;
+        float: left;
+      }
+      .paging {
+        display: flex;
+        justify-content: space-between;
+        button {
+          background-color: color-green;
+          padding: 0;
+          .arrow {
+            height: 20px;
+            padding-left: 10px;
+            padding-bottom: 3px;
+          }
+          .left {
+            transform: rotate(180deg);
+            padding-top: 3px;
+            padding-bottom: 0;
+          }
         }
       }
     }
@@ -118,6 +145,7 @@
             border-radius: 10px;
             border-top-left-radius: 0;
             border-bottom-left-radius: 0;
+            cursor: pointer;
             img {
               height: 24px;
             }
@@ -132,6 +160,7 @@
       .banner {
         border-radius: 15px;
         padding: 40px 10px 10px 10px;
+        height: 330px;
         h3 {
           padding-top: 20px;
           padding-bottom: 50px;
