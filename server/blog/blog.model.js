@@ -46,6 +46,16 @@ const BlogSchema = new mongoose.Schema(
       required: true,
       trim: true,
       unique : true
+    },
+    newer: {
+      type: String,
+      required: false,
+      trim: true
+    },
+    older: {
+      type: String,
+      required: false,
+      trim: true
     }
   },
   {

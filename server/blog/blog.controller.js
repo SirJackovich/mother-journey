@@ -5,9 +5,10 @@ const blogService = require('./blog.service');
 // routes
 router.get('/', getAll);
 router.post('/', create);
+router.get('/newest', getNewest);
 router.get('/:path', getByPath);
-router.put('/:id', update);
-router.delete('/:id', _delete);
+router.put('/:path', update);
+router.delete('/:path', remove);
 
 module.exports = router;
 
@@ -30,13 +31,19 @@ function getByPath(req, res, next) {
 }
 
 function update(req, res, next) {
-  blogService.update(req.params.id, req.body)
+  blogService.update(req.params.path, req.body)
     .then(() => res.json({}))
     .catch(err => next(err));
 }
 
-function _delete(req, res, next) {
-  blogService.delete(req.params.id)
+function remove(req, res, next) {
+  blogService.remove(req.params.path)
     .then(() => res.json({}))
+    .catch(err => next(err));
+}
+
+function getNewest(req, res, next) {
+  blogService.getNewest()
+    .then(blog => blog ? res.json(blog) : res.json())
     .catch(err => next(err));
 }

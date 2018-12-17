@@ -1,6 +1,7 @@
 <template>
   <div id="create">
-    <h2>Create</h2>
+    <h2 v-if="!edit">Create</h2>
+    <h2 v-else>Edit</h2>
     <form @submit.prevent="handleSubmit">
       <div class="form-group">
         <label htmlFor="title">Title</label>
@@ -23,8 +24,10 @@
         <input type="text" v-model="credit" name="credit" class="form-control" :class="{ 'is-invalid': submitted && !credit }" />
       </div>
       <div class="form-group">
-        <button :disabled="loading" type='button' class="cancel button">Cancel</button>
-        <button :disabled="loading" class="button" >Publish</button>
+        <router-link v-if="!edit" :disabled="loading" type="button" to="/blog" tag="button" class="cancel button">Cancel</router-link>
+        <button v-else :disabled="loading" type="button" class="cancel button" v-on:click="remove">Delete</button>
+        <button v-if="!edit" :disabled="loading" class="button" >Publish</button>
+        <button v-else :disabled="loading" class="button" >Save</button>
       </div>
       <div v-if="error" class="alert alert-danger">{{error}}</div>
     </form>
@@ -72,8 +75,8 @@
 </style>
 
 <script>
-  import { blogService } from '../_services';
-  import { authHeader} from '../_helpers';
+  import { blogService, imageService } from '../_services';
+  import { authHeader, formatBytes } from "../_helpers";
   import router from '../router';
   import vue2Dropzone from 'vue2-dropzone';
   import 'vue2-dropzone/dist/vue2Dropzone.min.css';
@@ -100,7 +103,34 @@
         path: '',
         submitted: false,
         loading: false,
-        error: ''
+        edit: false,
+        error: '',
+        post: null,
+        older: '',
+        newer:''
+      }
+    },
+    created () {
+      if (this.$route.query.path) {
+        this.edit = true;
+        blogService.getByPath(this.$route.query.path).then(post => {
+          this.post = post;
+          this.title = post.title;
+          this.quote = post.quote;
+          this.content = post.content;
+          this.credit = post.credit;
+          this.path = post.path;
+          this.older = post.older;
+          this.newer = post.newer;
+          imageService.info(post.photo).then(image => {
+              let file = {};
+              file.size = image.length;
+              file.type = image.contentType;
+              this.$refs.myVueDropzone.manuallyAddFile(file, `/api/image/${post.photo}`);
+            }
+          );
+
+        });
       }
     },
     methods: {
@@ -113,13 +143,49 @@
         }
 
         this.loading = true;
-        this.$refs.myVueDropzone.processQueue();
+        this.path = this.title.toLowerCase().replace(/\s+/g, '-');
+
+        if(this.$refs.myVueDropzone.getQueuedFiles().length > 0){
+          this.$refs.myVueDropzone.processQueue();
+        }else{
+          this.updateOrCreate();
+        }
       },
       afterComplete(file) {
-        let photo = file.xhr.response;
-        this.path = this.title.toLowerCase().replace(/\s+/g, '-');
-        blogService.create(this.title, this.quote, photo, this.content, this.credit, this.path).then(
-          router.push(`/blog/${this.path}`)
+        if( file && !file.manuallyAdded){
+          this.updateOrCreate(file);
+        }
+      },
+      updateOrCreate(file){
+        if(this.edit){
+          if(file){
+            blogService.update(this.title, this.quote, file.xhr.response, this.content, this.credit, this.path, this.older, this.newer).then(
+              router.push(`/blog/${this.path}`)
+            );
+          }else{
+            blogService.update(this.title, this.quote, this.post.photo, this.content, this.credit, this.path, this.older, this.newer).then(
+              router.push(`/blog/${this.path}`)
+            );
+          }
+        }else{
+          blogService.getNewest().then(blog => {
+            if (blog) {
+              blogService.update(blog.title, blog.quote, blog.photo, blog.content, blog.credit, blog.path, blog.older, this.path).then(
+                blogService.create(this.title, this.quote, file.xhr.response, this.content, this.credit, this.path, blog.path).then(
+                  router.push(`/blog/${this.path}`)
+                )
+              )
+            } else {
+              blogService.create(this.title, this.quote, file.xhr.response, this.content, this.credit, this.path, '').then(
+                router.push(`/blog/${this.path}`)
+              )
+            }
+          });
+        }
+      },
+      remove(){
+        blogService.remove(this.path).then(
+          router.push('/blog')
         );
       }
     }

@@ -68,6 +68,19 @@ router.get('/:filename', (req, res) => {
   });
 });
 
+router.get('/info/:filename', (req, res) => {
+  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+    // Check if file
+    if (!file || file.length === 0) {
+      return res.status(404).json({
+        err: 'No file exists'
+      });
+    }
+    // File exists
+    return res.json(file);
+  });
+});
+
 module.exports = router;
 
 

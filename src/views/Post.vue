@@ -3,7 +3,7 @@
     <section>
       <h2>
         {{post.title}}
-        <button type="submit"><img src="../assets/img/edit-icon.svg"></button>
+        <button v-if="isLoggedIn" v-on:click="edit"><img src="../assets/img/edit-icon.svg"></button>
       </h2>
       <p>{{post.quote}}</p>
       <p class="date">
@@ -17,10 +17,11 @@
           </vue-goodshare-pinterest>
         </span>
       </p>
-      <p><img class="post-image" :src="post.photo"><span v-html="post.content"></span></p>
+      <p class="content"><img class="post-image" :src="post.photo"><span v-html="post.content"></span></p>
       <div class="paging">
-        <button class="button" ><img class="arrow left" src="../assets/img/right-arrow.svg">Newer Post</button>
-        <button class="button" >Older Post<img class="arrow" src="../assets/img/right-arrow.svg"></button>
+        <router-link v-if="post.newer" :to="post.newer" tag="button" class="button" ><img class="arrow left" src="../assets/img/right-arrow.svg">Newer Post</router-link>
+        <router-link v-if="post.older" :to="post.older" tag="button" class="button" >Older Post<img class="arrow" src="../assets/img/right-arrow.svg"></router-link>
+        <router-link v-if="!edit" :disabled="loading" type="button" to="/blog" tag="button" class="cancel button">Cancel</router-link>
       </div>
     </section>
     <aside>
@@ -80,7 +81,7 @@
           color: white;
         }
       }
-      p {
+      .content {
         text-align: left;
       }
       .post-image {
@@ -190,6 +191,7 @@
 
 <script>
   import { blogService} from '../_services';
+  import router from '../router';
   import VueGoodshareFacebook from "vue-goodshare/src/providers/Facebook.vue";
   import VueGoodshareTwitter from "vue-goodshare/src/providers/Twitter.vue";
   import VueGoodsharePinterest from "vue-goodshare/src/providers/Pinterest.vue";
@@ -204,10 +206,13 @@
           title: '',
           quote: '',
           credit: '',
-          photo: ''
+          photo: '',
+          older:'',
+          newer:''
         },
         search: '',
-        image: null
+        image: null,
+        user: null
       }
     },
     created () {
@@ -218,6 +223,11 @@
         this.post.createdAt = new Date(this.post.createdAt).toLocaleDateString("en-US", options);
         this.post.content = this.post.content.replace(/(?:\r\n|\r|\n)/g, '<br>');
       });
+      try {
+        this.user = JSON.parse(sessionStorage.getItem('user'));
+      }catch (e) {
+        console.error(e);
+      }
     },
     methods: {
       handleSubmit (e) {
@@ -227,12 +237,31 @@
         if (!this.search) {
           return;
         }
+      },
+      edit (){
+        router.push({ path: '/create', query: { path: this.post.path }})
+      }
+    },
+    computed: {
+      isLoggedIn: function() {
+        return !!this.user;
       }
     },
     components: {
       VueGoodshareFacebook,
       VueGoodshareTwitter,
       VueGoodsharePinterest,
+    },
+    watch: {
+      '$route' (to, from) {
+        blogService.getByPath(to.params.path).then(post => {
+          this.post = post;
+          this.post.photo = `/api/image/${this.post.photo}`;
+          let options = { year: 'numeric', month: 'long', day: 'numeric' };
+          this.post.createdAt = new Date(this.post.createdAt).toLocaleDateString("en-US", options);
+          this.post.content = this.post.content.replace(/(?:\r\n|\r|\n)/g, '<br>');
+        });
+      }
     }
   };
 </script>

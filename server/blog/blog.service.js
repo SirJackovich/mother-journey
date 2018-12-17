@@ -5,7 +5,8 @@ module.exports = {
   getByPath,
   create,
   update,
-  delete: _delete
+  remove,
+  getNewest
 };
 
 async function getAll() {
@@ -21,13 +22,17 @@ async function create(params) {
   await blog.save();
 }
 
-async function update(id, params) {
-  const blog = await Blog.findById(id);
+async function update(path, params) {
+  const blog = await Blog.findOne({path});
   if (!blog) throw 'Blog not found';
   Object.assign(blog, params);
   await blog.save();
 }
 
-async function _delete(id) {
-  await Blog.findByIdAndRemove(id);
+async function remove(path) {
+  await Blog.findOneAndDelete({path});
+}
+
+async function getNewest() {
+  return await Blog.findOne().sort('-createdAt');
 }
