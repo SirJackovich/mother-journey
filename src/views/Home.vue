@@ -15,10 +15,13 @@
       </div>
     </div>
     <router-link class="learn-more button" to="/about" tag="button">Learn More</router-link>
-    <div>
+    <div class="recent">
       <h2 v-if="blogs.length" >Recent Posts:</h2>
-      <div class="blog-box" v-for="blog in blogs" :key="blog.id">
-        <p>{{blog.title}}</p>
+      <div class="blog-boxes">
+        <div class="blog-box" v-for="blog in blogs" :key="blog.id" v-on:click="goToBlog(blog.path)">
+          <p>{{blog.title}}</p>
+          <img :src="'/api/image/' + blog.photo">
+        </div>
       </div>
     </div>
   </div>
@@ -67,11 +70,44 @@
     .learn-more {
       background-color: color-purple;
     }
+    .recent {
+      background-color: color-light-blue;
+      padding-bottom: 50px;
+      h2 {
+        font-size: 40px;
+        color: white;
+        text-align: left;
+        padding-left: 110px;
+        padding-top: 50px;
+      }
+      .blog-boxes {
+        display: flex;
+        justify-content: space-evenly;
+        padding-bottom: 40px;
+        .blog-box {
+          background-color: white;
+          padding-bottom: 50px;
+          border-radius: 25px;
+          width: 40%;
+          cursor: pointer;
+          p {
+            margin: 20px 0;
+            font-size: 20px;
+          }
+          img {
+            height: 300px;
+            width: 100%;
+            object-fit: cover;
+          }
+        }
+      }
+    }
   }
 </style>
 
 <script>
   import { blogService } from '../_services';
+  import router from '../router';
 
   export default {
     data () {
@@ -81,6 +117,11 @@
     },
     created () {
       blogService.getAll().then(blogs => this.blogs = blogs.reverse().slice(0, 2));
+    },
+    methods: {
+      goToBlog(path){
+        router.push(`/blog/${path}`);
+      }
     }
   };
 </script>
