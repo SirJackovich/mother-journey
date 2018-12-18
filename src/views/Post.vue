@@ -17,7 +17,13 @@
           </vue-goodshare-pinterest>
         </span>
       </p>
-      <p class="content"><img class="post-image" :src="post.photo"><span v-html="post.content"></span></p>
+      <p class="content">
+        <span class="post-image">
+          <img  :src="post.photo">
+          <small>{{post.credit}}</small>
+        </span>
+        <span v-html="post.content"></span>
+      </p>
       <div class="paging" :class="{ 'older': !post.newer }">
         <router-link v-if="post.newer" :to="post.newer" tag="button" class="button" ><img class="arrow left" src="../assets/img/right-arrow.svg">Newer Post</router-link>
         <router-link v-if="post.older" :to="post.older" tag="button" class="button" >Older Post<img class="arrow" src="../assets/img/right-arrow.svg"></router-link>
@@ -84,11 +90,20 @@
         text-align: left;
       }
       .post-image {
-        max-width: 600px;
-        max-height: 600px;
-        padding-right: 50px;
-        height: inherit;
         float: left;
+        img {
+          max-width: 600px;
+          max-height: 600px;
+          padding-right: 50px;
+          height: inherit;
+        }
+        small {
+          font-size: 14px;
+          font-weight: inherit;
+          display: block;
+          text-align: left;
+          padding-top: 10px;
+        }
       }
       .paging {
         display: flex;
