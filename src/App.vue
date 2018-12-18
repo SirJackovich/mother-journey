@@ -18,8 +18,6 @@
         <router-link class="blue-hover" to="/resources">Resources</router-link>
         <router-link class="purple-hover" to="/faq">FAQ</router-link>
         <router-link class="pink-hover" to="/contact">Contact</router-link>
-        <!--<router-link v-if="isLoggedIn" href="/create">Create</router-link>-->
-        <!--<router-link v-if="isLoggedIn" v-on:click="logout">Logout</router-link>-->
       </nav>
     </header>
     <router-view @loggedIn="login"></router-view>

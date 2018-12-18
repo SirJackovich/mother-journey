@@ -18,10 +18,9 @@
         </span>
       </p>
       <p class="content"><img class="post-image" :src="post.photo"><span v-html="post.content"></span></p>
-      <div class="paging">
+      <div class="paging" :class="{ 'older': !post.newer }">
         <router-link v-if="post.newer" :to="post.newer" tag="button" class="button" ><img class="arrow left" src="../assets/img/right-arrow.svg">Newer Post</router-link>
         <router-link v-if="post.older" :to="post.older" tag="button" class="button" >Older Post<img class="arrow" src="../assets/img/right-arrow.svg"></router-link>
-        <router-link v-if="!edit" :disabled="loading" type="button" to="/blog" tag="button" class="cancel button">Cancel</router-link>
       </div>
     </section>
     <aside>
@@ -108,6 +107,9 @@
             padding-bottom: 0;
           }
         }
+      }
+      .paging.older {
+        justify-content: flex-end;
       }
     }
     aside {
@@ -217,11 +219,15 @@
     },
     created () {
       blogService.getByPath(this.$route.params.path).then(post => {
-        this.post = post;
-        this.post.photo = `/api/image/${this.post.photo}`;
-        let options = { year: 'numeric', month: 'long', day: 'numeric' };
-        this.post.createdAt = new Date(this.post.createdAt).toLocaleDateString("en-US", options);
-        this.post.content = this.post.content.replace(/(?:\r\n|\r|\n)/g, '<br>');
+        if(post === "Not Found"){
+          router.push('/blog');
+        }else{
+          this.post = post;
+          this.post.photo = `/api/image/${this.post.photo}`;
+          let options = { year: 'numeric', month: 'long', day: 'numeric' };
+          this.post.createdAt = new Date(this.post.createdAt).toLocaleDateString("en-US", options);
+          this.post.content = this.post.content.replace(/(?:\r\n|\r|\n)/g, '<br>');
+        }
       });
       try {
         this.user = JSON.parse(sessionStorage.getItem('user'));

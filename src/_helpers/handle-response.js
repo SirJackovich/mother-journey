@@ -2,6 +2,9 @@ import { logout } from './logout';
 import router from '../router';
 
 export function handleResponse(response) {
+  if(response.status === 404){
+    return response.text();
+  }
   return response.text().then(text => {
     const data = text && JSON.parse(text);
     if (!response.ok) {
