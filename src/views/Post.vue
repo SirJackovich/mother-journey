@@ -61,8 +61,6 @@
     flex-flow: row wrap;
     padding: 0 110px;
     section {
-      flex: 3 0;
-      padding-right: 50px;
       h2 {
         font-size: 40px;
         padding-bottom: 20px;
@@ -125,82 +123,6 @@
       }
       .paging.older {
         justify-content: flex-end;
-      }
-    }
-    aside {
-      flex: .6 0 0;
-      form {
-        .form-group {
-          margin: 0;
-          label {
-            padding: 5px 10px;
-            font-size: 16px;
-            color: white;
-            background-color: color-pink;
-            border-radius: 10px;
-            width: inherit;
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-            margin: 0;
-            height: 34px;
-          }
-          input {
-            font-size: 16px;
-            padding: 0;
-            padding-left: 5px;
-            height: 34px;
-            border: none;
-            border-bottom: 1px solid color-pink;
-            border-top: 1px solid color-pink;
-            border-radius: 0;
-          }
-          button {
-            background-color: transparent;
-            padding: 0;
-            height: 34px;
-            border: 1px solid color-pink;
-            border-left: none;
-            border-radius: 10px;
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-            cursor: pointer;
-            img {
-              height: 24px;
-            }
-          }
-        }
-        .form-group:hover input,
-        .form-group:hover button,
-        input:focus ~ button {
-          background-color: white;
-        }
-      }
-      .banner {
-        border-radius: 15px;
-        padding: 40px 10px 10px 10px;
-        height: 330px;
-        h3 {
-          padding-top: 20px;
-          padding-bottom: 50px;
-        }
-      }
-      .resources {
-        background-color: color-light-blue;
-        .button {
-          background-color: color-light-blue;
-        }
-      }
-      .about {
-        background-color: color-purple;
-        .button {
-          background-color: color-purple;
-        }
-      }
-      .contact {
-        background-color: color-pink;
-        .button {
-          background-color: color-pink;
-        }
       }
     }
   }
