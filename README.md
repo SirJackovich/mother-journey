@@ -5,19 +5,24 @@
 npm install
 ```
 
+```
+brew install mongodb
+mkdir -p /data/db
+sudo chown -R `id -un` /data/db
+```
+
 ## Run database
 ```
-mongod &
+mongod
 ```
 
-### Compiles and hot-reloads for development
+### Start backend server (in a new terminal window)
+```
+npm start
+```
+### Start frontend server (in a new terminal window)
 ```
 npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
 ```
 
 ### Run your tests

@@ -42,7 +42,7 @@
       background-image: url(assets/img/aaron-burden-heading.jpeg);
       background-size: 100%;
       background-repeat: no-repeat;
-      height: 364px;
+      min-height: 300px;
       margin-bottom: 50px;
       a {
         color: white;
