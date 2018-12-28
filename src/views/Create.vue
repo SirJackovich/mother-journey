@@ -25,6 +25,23 @@
         <input type="text" v-model="credit" name="credit" class="form-control" :class="{ 'is-invalid': submitted && !credit }" />
       </div>
       <div class="form-group">
+        <label htmlFor="categories">Categories</label>
+        <multiselect
+          v-model="categories"
+          name="categories"
+          label="name"
+          track-by="name"
+          class="form-control"
+          tag-placeholder="Add this as new category"
+          placeholder="Search or add a category"
+          :taggable="true"
+          @tag="addCategory"
+          :options="categoryOptions"
+          :multiple="true"
+          :class="{ 'is-invalid': submitted && !categories }" ></multiselect>
+      </div>
+
+      <div class="form-group">
         <router-link v-if="!edit" :disabled="loading" type="button" to="/blog" tag="button" class="cancel button">Cancel</router-link>
         <button v-else :disabled="loading" type="button" class="cancel button" v-on:click="remove">Delete</button>
         <button v-if="!edit" :disabled="loading" class="button" >Publish</button>
@@ -75,15 +92,18 @@
 </style>
 
 <script>
-  import { blogService, imageService } from '../_services';
+  import { blogService, imageService, categoryService } from '../_services';
   import { authHeader, formatBytes } from "../_helpers";
   import router from '../router';
   import vue2Dropzone from 'vue2-dropzone';
   import 'vue2-dropzone/dist/vue2Dropzone.min.css';
+  import Multiselect from 'vue-multiselect';
+  import "vue-multiselect/dist/vue-multiselect.min.css";
 
   export default {
     components: {
-      vueDropzone: vue2Dropzone
+      vueDropzone: vue2Dropzone,
+      Multiselect
     },
     data () {
       return {
@@ -100,6 +120,8 @@
         quote: '',
         content: '',
         credit: '',
+        categories: [],
+        categoryOptions: [],
         path: '',
         submitted: false,
         loading: false,
@@ -111,6 +133,7 @@
       }
     },
     created () {
+      categoryService.getAll().then(categories => this.categoryOptions = categories);
       if (this.$route.query.path) {
         this.edit = true;
         blogService.getByPath(this.$route.query.path).then(post => {
@@ -119,6 +142,7 @@
           this.quote = post.quote;
           this.content = post.content;
           this.credit = post.credit;
+          this.categories = post.categories;
           this.path = post.path;
           this.older = post.older;
           this.newer = post.newer;
@@ -159,24 +183,24 @@
       updateOrCreate(file){
         if(this.edit){
           if(file){
-            blogService.update(this.title, this.quote, file.xhr.response, this.content, this.credit, this.path, this.older, this.newer).then(
+            blogService.update(this.title, this.quote, file.xhr.response, this.content, this.credit, this.categories, this.path, this.older, this.newer).then(
               router.push(`/blog/${this.path}`)
             );
           }else{
-            blogService.update(this.title, this.quote, this.post.photo, this.content, this.credit, this.path, this.older, this.newer).then(
+            blogService.update(this.title, this.quote, this.post.photo, this.content, this.credit, this.categories, this.path, this.older, this.newer).then(
               router.push(`/blog/${this.path}`)
             );
           }
         }else{
           blogService.getNewest().then(blog => {
             if (blog) {
-              blogService.update(blog.title, blog.quote, blog.photo, blog.content, blog.credit, blog.path, blog.older, this.path).then(
-                blogService.create(this.title, this.quote, file.xhr.response, this.content, this.credit, this.path, blog.path).then(
+              blogService.update(blog.title, blog.quote, blog.photo, blog.content, blog.credit, blog.categories, blog.path, blog.older, this.path).then(
+                blogService.create(this.title, this.quote, file.xhr.response, this.content, this.credit, this.categories, this.path, blog.path).then(
                   router.push(`/blog/${this.path}`)
                 )
               )
             } else {
-              blogService.create(this.title, this.quote, file.xhr.response, this.content, this.credit, this.path, '').then(
+              blogService.create(this.title, this.quote, file.xhr.response, this.content, this.credit, this.categories, this.path, '').then(
                 router.push(`/blog/${this.path}`)
               )
             }
@@ -187,6 +211,14 @@
         blogService.remove(this.path).then(
           router.push('/blog')
         );
+      },
+      addCategory (newCategory) {
+        categoryService.create(newCategory);
+        const category = {
+          name: newCategory
+        };
+        this.categoryOptions.push(category);
+        this.categories.push(category);
       }
     }
   };

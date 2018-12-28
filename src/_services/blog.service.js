@@ -9,11 +9,11 @@ export const blogService = {
   getNewest
 };
 
-function create(title, quote, photo, content, credit, path, older) {
+function create(title, quote, photo, content, credit, categories, path, older) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Authorization': authHeader() },
-    body: JSON.stringify({ title, quote, photo, content, credit, path, older })
+    body: JSON.stringify({ title, quote, photo, content, credit, categories, path, older })
   };
 
   return fetch(`/api/blog/`, requestOptions)
@@ -39,11 +39,11 @@ function getByPath(path) {
   return fetch(`/api/blog/${path}`, requestOptions).then(handleResponse);
 }
 
-function update(title, quote, photo, content, credit, path, older, newer) {
+function update(title, quote, photo, content, credit, categories, path, older, newer) {
   const requestOptions = {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json', 'Authorization': authHeader() },
-    body: JSON.stringify({ title, quote, photo, content, credit, path, older, newer })
+    body: JSON.stringify({ title, quote, photo, content, credit, categories, path, older, newer })
   };
 
   return fetch(`/api/blog/${path}`, requestOptions).then(handleResponse);

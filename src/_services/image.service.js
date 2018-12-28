@@ -1,4 +1,4 @@
-import { authHeader, handleResponse } from '../_helpers';
+import { handleResponse } from '../_helpers';
 
 export const imageService = {
   info
