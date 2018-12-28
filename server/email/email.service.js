@@ -6,7 +6,7 @@ module.exports = {
 };
 
 async function email({ name, email, subject, message }) {
-  sgMail.send({
+  return await sgMail.send({
     to: 'thismothersjourney.com@gmail.com',
     from: {
       name,

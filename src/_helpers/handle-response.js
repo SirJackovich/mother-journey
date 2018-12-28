@@ -13,11 +13,9 @@ export function handleResponse(response) {
         logout();
         router.push('/');
       }
-
       const error = (data && data.message) || response.statusText;
       return Promise.reject(error);
     }
-
     return data;
   });
 }

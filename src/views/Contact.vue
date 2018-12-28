@@ -1,6 +1,8 @@
 <template>
   <div id="contact">
     <h2>Contact Me</h2>
+    <p v-if="sent">Message sent</p>
+    <div v-if="error" class="alert alert-danger">{{error}}</div>
     <form @submit.prevent="handleSubmit">
       <div class="sender">
         <div class="form-group">
@@ -23,7 +25,6 @@
       <div class="form-group">
         <button :disabled="loading" class="button">Send</button>
       </div>
-      <div v-if="error" class="alert alert-danger">{{error}}</div>
     </form>
   </div>
 </template>
@@ -63,12 +64,14 @@
         message: '',
         submitted: false,
         loading: false,
-        error: ''
+        error: '',
+        sent: false
       }
     },
     methods: {
       handleSubmit (e) {
         this.submitted = true;
+        this.sent = false;
         const { name, email, subject, message } = this;
 
         // stop here if form is invalid
@@ -78,14 +81,16 @@
         }
 
         this.loading = true;
-        emailService.email(name, email, subject, message);
+        emailService.email(name, email, subject, message).then(() => {
+          this.sent = true;
+          this.name = '';
+          this.email = '';
+          this.subject = '';
+          this.message = '';
+          this.error = '';
+        }).catch(err => this.error = err);
         this.submitted = false;
         this.loading = false;
-        this.name = '';
-        this.email = '';
-        this.subject = '';
-        this.message = '';
-        this.error = '';
       }
     }
   };

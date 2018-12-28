@@ -1,6 +1,7 @@
 <template>
   <div id="login">
     <h2>Login</h2>
+    <div v-if="error" class="alert alert-danger">{{error}}</div>
     <form @submit.prevent="handleSubmit">
       <div class="form-group">
         <label htmlFor="username">Username</label>
@@ -13,7 +14,6 @@
       <div class="form-group">
         <button :disabled="loading" class="button">Login</button>
       </div>
-      <div v-if="error" class="alert alert-danger">{{error}}</div>
     </form>
   </div>
 </template>
@@ -75,7 +75,9 @@
         userService.login(username, password).then(user => {
           router.push(this.returnUrl);
           this.$emit('loggedIn', user)
-        });
+        }).catch(err => this.error = err);
+        this.submitted = false;
+        this.loading = false;
       }
     }
   };

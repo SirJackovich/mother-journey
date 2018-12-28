@@ -2,6 +2,7 @@
   <div id="create">
     <h2 v-if="!edit">Create</h2>
     <h2 v-else>Edit</h2>
+    <div v-if="error" class="alert alert-danger">{{error}}</div>
     <form @submit.prevent="handleSubmit">
       <div class="form-group">
         <label htmlFor="title">Title</label>
@@ -29,7 +30,6 @@
         <button v-if="!edit" :disabled="loading" class="button" >Publish</button>
         <button v-else :disabled="loading" class="button" >Save</button>
       </div>
-      <div v-if="error" class="alert alert-danger">{{error}}</div>
     </form>
   </div>
 </template>
@@ -89,7 +89,7 @@
       return {
         dropzoneOptions: {
           headers: { 'Authorization': authHeader()},
-          url: 'api/image/',
+          url: '/api/image/',
           addRemoveLinks: true,
           autoProcessQueue: false,
           maxFiles: 1,
