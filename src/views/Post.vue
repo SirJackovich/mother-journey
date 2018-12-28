@@ -182,7 +182,7 @@
         }
       },
       edit (){
-        router.push({ path: '/create', query: { path: this.post.path }})
+        router.push({ path: '/blog/create', query: { path: this.post.path }})
       }
     },
     computed: {

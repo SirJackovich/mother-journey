@@ -15,8 +15,8 @@
       </div>
     </div>
     <router-link class="learn-more button" to="/about" tag="button">Learn More</router-link>
-    <div class="recent">
-      <h2 v-if="blogs.length" >Recent Posts:</h2>
+    <div v-if="blogs.length" class="recent">
+      <h2>Recent Posts:</h2>
       <div class="blog-boxes">
         <div class="blog-box" v-for="blog in blogs" :key="blog.id" v-on:click="goToBlog(blog.path)">
           <p>{{blog.title}}</p>

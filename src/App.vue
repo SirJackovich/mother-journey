@@ -3,7 +3,7 @@
     <header>
       <router-link class="login blue-hover" v-if="!isLoggedIn" to="/login">Login</router-link>
       <b-dropdown class="login" v-if="isLoggedIn" variant="link" :text="user.username">
-        <b-dropdown-item class="blue-hover" to="/create">
+        <b-dropdown-item class="blue-hover" to="/blog/create">
           Create
         </b-dropdown-item>
         <b-dropdown-item  class="blue-hover" v-on:click="logout">

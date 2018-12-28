@@ -18,9 +18,9 @@ const router = new Router({
   routes: [
     { path: '/about', component: About},
     { path: '/blog', component: Blog},
+    { path: '/blog/create', component: Create },
     { path: '/blog/:path', component: Post},
     { path: '/contact', component: Contact},
-    { path: '/create', component: Create },
     { path: '/faq', component: FAQ},
     { path: '/', component: Home },
     { path: '/login', component: Login },

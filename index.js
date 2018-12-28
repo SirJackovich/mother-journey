@@ -8,7 +8,7 @@ const path = require('path');
 // const expressJwt = require('express-jwt');
 // const userService = require('./server/user/user.service');
 
-mongoose.connect(config.db.uri, { useNewUrlParser: true });
+mongoose.connect(config.db.uri, { useNewUrlParser: true, useCreateIndex: true });
 
 app.use(requireHTTPS);
 app.use(bodyParser.urlencoded({extended: true}));

@@ -3,7 +3,7 @@
     <section>
       <h2>Blog</h2>
       <div class="box" v-for="blog in blogs" :key="blog.id" v-on:click="goToBlog(blog.path)">
-        <img :src="'/api/image/' + blog.photo">
+        <img :src="`/api/image/${blog.photo}`">
         <p>{{blog.title}}</p>
         <p>{{blog.createdAt}}</p>
         <p>{{blog.quote}}</p>
