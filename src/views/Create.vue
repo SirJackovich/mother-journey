@@ -31,10 +31,10 @@
           name="categories"
           label="name"
           track-by="name"
-          class="form-control"
-          tag-placeholder="Add this as new category"
+          tag-placeholder=""
           placeholder="Search or add a category"
           :taggable="true"
+          :show-labels="false"
           @tag="addCategory"
           :options="categoryOptions"
           :multiple="true"
@@ -85,6 +85,10 @@
         }
         .vue-dropzone.dz-started {
           background-image: none;
+        }
+        .multiselect__option--highlight,
+        .multiselect__tag {
+          background-color: color-green
         }
       }
     }

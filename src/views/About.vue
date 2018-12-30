@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="banner">
-      <h3>Have a question or comment?</h3>
+      <h3>Questions or Comments?</h3>
       <router-link class="button" to="/contact" tag="button">Contact Me</router-link>
     </div>
   </div>

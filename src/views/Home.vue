@@ -11,7 +11,7 @@
       </div>
       <div class="box services">
         <h2>Services:</h2>
-        <p>Provide resources and information, emotional support and comic relief.</p>
+        <p>Provide resources and information, emotional support, and comic relief.</p>
       </div>
     </div>
     <router-link class="learn-more button" to="/about" tag="button">Learn More</router-link>

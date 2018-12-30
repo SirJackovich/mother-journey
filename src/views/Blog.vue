@@ -28,7 +28,7 @@
         <router-link class="button" to="/about" tag="button">Click Here</router-link>
       </div>
       <div class="banner contact">
-        <h3>Have questions or comments?</h3>
+        <h3>Questions or Comments?</h3>
         <router-link class="button" to="/contact" tag="button">Contact Me</router-link>
       </div>
     </aside>

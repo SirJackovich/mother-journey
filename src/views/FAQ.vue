@@ -3,7 +3,7 @@
     <h2>Frequently Asked Questions</h2>
     <p class="sub-heading">I love to answer readers' questions! Here are a few of the most popular FAQs:</p>
     <div v-for="category in questions" class="category">
-      <h3>{{category.title}} Questions</h3>
+      <h3>{{category.title}}</h3>
       <span v-for="question in category.questions" class="qna">
         <p v-on:click="question.showing = !question.showing" class="question" :class="{ 'expanded': question.showing }">{{question.question}}</p>
         <p v-show="question.showing" class="answer">{{question.answer}}</p>
@@ -32,7 +32,7 @@
       padding-bottom: 20px;
     }
     .category {
-      border-top: 1px #7c00a5 solid;
+      border-top: 1px color-light-blue solid;
       margin: 0 110px 50px 110px;
       padding-top: 20px;
 
@@ -47,21 +47,21 @@
         .question {
           padding-left: 50px;
           cursor: pointer;
+          color: color-pink;
         }
         .question:hover,
         .expanded {
           text-decoration: underline;
         }
         .answer {
-          color: color-pink;
           padding-left: 100px;
         }
       }
     }
     .banner {
-      background-color: color-pink;
+      background-color: color-green;
       .button {
-        background-color: color-pink;
+        background-color: color-green;
       }
     }
   }
