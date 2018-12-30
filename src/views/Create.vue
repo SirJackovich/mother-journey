@@ -212,9 +212,11 @@
         }
       },
       remove(){
-        blogService.remove(this.path).then(
-          router.push('/blog')
-        );
+        if (confirm("Are you sure you want to delete this blog post? (This action cannot be undone)")) {
+          blogService.remove(this.path).then(
+            router.push('/blog')
+          );
+        }
       },
       addCategory (newCategory) {
         categoryService.create(newCategory);

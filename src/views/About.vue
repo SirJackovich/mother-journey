@@ -47,7 +47,7 @@
         padding-bottom: 50px;
       }
       .purpose {
-        padding: 0 50px 50px 50px;
+        padding-bottom: 50px;
       }
       .about-me {
         display:flex;

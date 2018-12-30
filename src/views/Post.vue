@@ -23,6 +23,7 @@
           <small>{{post.credit}}</small>
         </span>
         <span v-html="post.content"></span>
+        <span>Categories: {{post.categories}}</span>
       </p>
       <div class="paging" :class="{ 'older': !post.newer }">
         <router-link v-if="post.newer" :to="post.newer" tag="button" class="button" ><img class="arrow left" src="../assets/img/right-arrow.svg">Newer Post</router-link>
@@ -68,6 +69,7 @@
           border: none;
           background-color: transparent;
           cursor: pointer;
+          position: absolute;
           img {
             height: 35px;
           }
@@ -185,6 +187,7 @@
             let options = { year: 'numeric', month: 'long', day: 'numeric' };
             this.post.createdAt = new Date(this.post.createdAt).toLocaleDateString("en-US", options);
             this.post.content = this.post.content.replace(/(?:\r\n|\r|\n)/g, '<br>');
+            this.post.categories = Array.prototype.map.call(post.categories, s => s.name).toString();
           }
         });
       }

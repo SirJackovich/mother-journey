@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <header>
-      <router-link class="login blue-hover" v-if="!isLoggedIn" to="/login">Login</router-link>
+      <div v-if="!isLoggedIn" class="login-wrapper">
+        <router-link class="hide login blue-hover" to="/login">Login</router-link>
+      </div>
       <b-dropdown class="login" v-if="isLoggedIn" variant="link" :text="user.username">
         <b-dropdown-item class="blue-hover" to="/blog/create">
           Create
@@ -42,6 +44,10 @@
       background-repeat: no-repeat;
       min-height: 300px;
       margin-bottom: 50px;
+      .login-wrapper {
+        display: flex;
+        justify-content: flex-end;
+      }
       a {
         color: white;
         font-weight: bold;
@@ -50,6 +56,9 @@
       a:hover,
       button:hover {
         text-decoration: none;
+      }
+      .hide {
+        color: transparent;
       }
       .login {
         font-size: 14px;
