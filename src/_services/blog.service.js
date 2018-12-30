@@ -3,6 +3,7 @@ import { authHeader, handleResponse } from '../_helpers';
 export const blogService = {
   create,
   getAll,
+  getByCategory,
   getByPath,
   update,
   remove,
@@ -29,6 +30,14 @@ function getAll() {
   };
 
   return fetch(`/api/blog/`, requestOptions).then(handleResponse);
+}
+
+function getByCategory(category) {
+  const requestOptions = {
+    method: 'GET'
+  };
+
+  return fetch(`/api/blog?category=${category}`, requestOptions).then(handleResponse);
 }
 
 function getByPath(path) {

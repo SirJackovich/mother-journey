@@ -18,8 +18,10 @@
         </div>
       </form>
       <div class="banner resources">
-        <h3>Want a list of additional resources?</h3>
-        <router-link class="button" to="/resources" tag="button">Resources</router-link>
+        <h3>Categories:</h3>
+        <div v-for="category in categories" :key="category.id" v-on:click="goToCategory(category.name)">
+          <p>{{category.name}}</p>
+        </div>
       </div>
       <div class="banner about">
         <h3>To learn more about the author</h3>
@@ -68,24 +70,20 @@
 </style>
 
 <script>
-  import { blogService } from '../_services';
+  import { blogService, categoryService } from '../_services';
   import router from '../router';
 
   export default {
     data () {
       return {
         blogs: [],
+        categories: [],
         search: ''
       }
     },
     created () {
-      blogService.getAll().then(blogs => {
-        let options = { year: 'numeric', month: 'long', day: 'numeric' };
-        for(let i = 0; i < blogs.length; i++){
-          blogs[i].createdAt = new Date(blogs[i].createdAt).toLocaleDateString("en-US", options);
-        }
-        this.blogs = blogs.reverse();
-      });
+      this.getBlogs(this.$route.query.category);
+      categoryService.getAll().then(categories => this.categories  = categories);
     },
     methods: {
       handleSubmit (e) {
@@ -98,6 +96,33 @@
       },
       goToBlog(path){
         router.push(`/blog/${path}`);
+      },
+      goToCategory(category){
+        router.push({ path: '/blog', query: { category: category }})
+      },
+      getBlogs(category){
+        if (category) {
+          blogService.getByCategory(category).then(blogs => {
+            let options = { year: 'numeric', month: 'long', day: 'numeric' };
+            for(let i = 0; i < blogs.length; i++){
+              blogs[i].createdAt = new Date(blogs[i].createdAt).toLocaleDateString("en-US", options);
+            }
+            this.blogs = blogs.reverse();
+          });
+        }else{
+          blogService.getAll().then(blogs => {
+            let options = { year: 'numeric', month: 'long', day: 'numeric' };
+            for(let i = 0; i < blogs.length; i++){
+              blogs[i].createdAt = new Date(blogs[i].createdAt).toLocaleDateString("en-US", options);
+            }
+            this.blogs = blogs.reverse();
+          });
+        }
+      }
+    },
+    watch: {
+      '$route' (to, from) {
+        this.getBlogs(to.query.category);
       }
     }
   };

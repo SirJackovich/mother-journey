@@ -134,6 +134,7 @@
   import VueGoodshareFacebook from "vue-goodshare/src/providers/Facebook.vue";
   import VueGoodshareTwitter from "vue-goodshare/src/providers/Twitter.vue";
   import VueGoodsharePinterest from "vue-goodshare/src/providers/Pinterest.vue";
+
   export default {
     data () {
       return {
@@ -155,17 +156,7 @@
       }
     },
     created () {
-      blogService.getByPath(this.$route.params.path).then(post => {
-        if(post === "Not Found"){
-          router.push('/blog');
-        }else{
-          this.post = post;
-          this.post.photo = `/api/image/${this.post.photo}`;
-          let options = { year: 'numeric', month: 'long', day: 'numeric' };
-          this.post.createdAt = new Date(this.post.createdAt).toLocaleDateString("en-US", options);
-          this.post.content = this.post.content.replace(/(?:\r\n|\r|\n)/g, '<br>');
-        }
-      });
+      this.getPost(this.$route.params.path);
       try {
         this.user = JSON.parse(sessionStorage.getItem('user'));
       }catch (e) {
@@ -183,6 +174,19 @@
       },
       edit (){
         router.push({ path: '/blog/create', query: { path: this.post.path }})
+      },
+      getPost(path){
+        blogService.getByPath(path).then(post => {
+          if(post === "Not Found"){
+            router.push('/blog');
+          }else{
+            this.post = post;
+            this.post.photo = `/api/image/${this.post.photo}`;
+            let options = { year: 'numeric', month: 'long', day: 'numeric' };
+            this.post.createdAt = new Date(this.post.createdAt).toLocaleDateString("en-US", options);
+            this.post.content = this.post.content.replace(/(?:\r\n|\r|\n)/g, '<br>');
+          }
+        });
       }
     },
     computed: {
@@ -197,13 +201,7 @@
     },
     watch: {
       '$route' (to, from) {
-        blogService.getByPath(to.params.path).then(post => {
-          this.post = post;
-          this.post.photo = `/api/image/${this.post.photo}`;
-          let options = { year: 'numeric', month: 'long', day: 'numeric' };
-          this.post.createdAt = new Date(this.post.createdAt).toLocaleDateString("en-US", options);
-          this.post.content = this.post.content.replace(/(?:\r\n|\r|\n)/g, '<br>');
-        });
+        this.getPost(to.params.path);
       }
     }
   };

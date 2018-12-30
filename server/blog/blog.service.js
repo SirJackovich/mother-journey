@@ -3,6 +3,7 @@ const Blog = require('./blog.model');
 module.exports = {
   getAll,
   getByPath,
+  getByCategory,
   create,
   update,
   remove,
@@ -15,6 +16,10 @@ async function getAll() {
 
 async function getByPath(path) {
   return await Blog.findOne({ path });
+}
+
+async function getByCategory(category) {
+  return await Blog.find({ categories: {$elemMatch: { name: category}}})
 }
 
 async function create(params) {

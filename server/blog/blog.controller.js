@@ -19,9 +19,15 @@ function create(req, res, next) {
 }
 
 function getAll(req, res, next) {
-  blogService.getAll()
-    .then(blogs => res.json(blogs))
-    .catch(err => next(err));
+  if(req.query.category){
+    blogService.getByCategory(req.query.category)
+      .then(blogs => res.json(blogs))
+      .catch(err => next(err));
+  }else{
+    blogService.getAll()
+      .then(blogs => res.json(blogs))
+      .catch(err => next(err));
+  }
 }
 
 function getByPath(req, res, next) {
