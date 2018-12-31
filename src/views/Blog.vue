@@ -13,7 +13,7 @@
       <form @submit.prevent="handleSubmit">
         <div class="form-group">
           <label htmlFor="search">Search</label>
-          <input type="text" v-model="search" name="search" class="form-control" />
+          <input type="text" v-model="query" name="search" class="form-control" />
           <button type="submit"><img src="../assets/img/search-icon.svg"></button>
         </div>
       </form>
@@ -78,21 +78,21 @@
       return {
         blogs: [],
         categories: [],
-        search: ''
+        query: ''
       }
     },
     created () {
-      this.getBlogs(this.$route.query.category);
+      this.getBlogs(this.$route.query);
       categoryService.getAll().then(categories => this.categories  = categories);
     },
     methods: {
       handleSubmit (e) {
-        this.submitted = true;
-
         // stop here if form is invalid
-        if (!this.search) {
+        if (!this.query) {
           return;
         }
+
+        router.push({ path: '/blog', query: { query: this.query }})
       },
       goToBlog(path){
         router.push(`/blog/${path}`);
@@ -100,16 +100,27 @@
       goToCategory(category){
         router.push({ path: '/blog', query: { category: category }})
       },
-      getBlogs(category){
-        if (category) {
-          blogService.getByCategory(category).then(blogs => {
-            let options = { year: 'numeric', month: 'long', day: 'numeric' };
-            for(let i = 0; i < blogs.length; i++){
-              blogs[i].createdAt = new Date(blogs[i].createdAt).toLocaleDateString("en-US", options);
-            }
-            this.blogs = blogs.reverse();
-          });
-        }else{
+      getBlogs(query){
+        if(query && (query.category || query.query)){
+          if (query.category) {
+            blogService.getByCategory(query.category).then(blogs => {
+              let options = { year: 'numeric', month: 'long', day: 'numeric' };
+              for (let i = 0; i < blogs.length; i++) {
+                blogs[i].createdAt = new Date(blogs[i].createdAt).toLocaleDateString("en-US", options);
+              }
+              this.blogs = blogs.reverse();
+            });
+
+          }else if (query.query) {
+            blogService.find(query.query).then(blogs => {
+              let options = { year: 'numeric', month: 'long', day: 'numeric' };
+              for(let i = 0; i < blogs.length; i++){
+                blogs[i].createdAt = new Date(blogs[i].createdAt).toLocaleDateString("en-US", options);
+              }
+              this.blogs = blogs.reverse();
+            });
+          }
+        } else{
           blogService.getAll().then(blogs => {
             let options = { year: 'numeric', month: 'long', day: 'numeric' };
             for(let i = 0; i < blogs.length; i++){
@@ -122,7 +133,7 @@
     },
     watch: {
       '$route' (to, from) {
-        this.getBlogs(to.query.category);
+        this.getBlogs(to.query);
       }
     }
   };

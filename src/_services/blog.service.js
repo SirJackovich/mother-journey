@@ -4,6 +4,7 @@ export const blogService = {
   create,
   getAll,
   getByCategory,
+  find,
   getByPath,
   update,
   remove,
@@ -38,6 +39,14 @@ function getByCategory(category) {
   };
 
   return fetch(`/api/blog?category=${category}`, requestOptions).then(handleResponse);
+}
+
+function find(query) {
+  const requestOptions = {
+    method: 'GET'
+  };
+
+  return fetch(`/api/blog?query=${query}`, requestOptions).then(handleResponse);
 }
 
 function getByPath(path) {

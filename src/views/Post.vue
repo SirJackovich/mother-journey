@@ -34,7 +34,7 @@
       <form @submit.prevent="handleSubmit">
         <div class="form-group">
           <label htmlFor="search">Search</label>
-          <input type="text" v-model="search" name="search" class="form-control" />
+          <input type="text" v-model="query" name="search" class="form-control" />
           <button type="submit"><img src="../assets/img/search-icon.svg"></button>
         </div>
       </form>
@@ -152,7 +152,7 @@
           older:'',
           newer:''
         },
-        search: '',
+        query: '',
         image: null,
         user: null
       }
@@ -167,12 +167,12 @@
     },
     methods: {
       handleSubmit (e) {
-        this.submitted = true;
-
         // stop here if form is invalid
-        if (!this.search) {
+        if (!this.query) {
           return;
         }
+
+        router.push({ path: '/blog', query: { query: this.query }})
       },
       edit (){
         router.push({ path: '/blog/create', query: { path: this.post.path }})

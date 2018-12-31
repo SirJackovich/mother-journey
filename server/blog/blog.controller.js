@@ -19,8 +19,12 @@ function create(req, res, next) {
 }
 
 function getAll(req, res, next) {
-  if(req.query.category){
+  if(req.query.category) {
     blogService.getByCategory(req.query.category)
+      .then(blogs => res.json(blogs))
+      .catch(err => next(err));
+  }else if(req.query.query){
+    blogService.find(req.query.query)
       .then(blogs => res.json(blogs))
       .catch(err => next(err));
   }else{

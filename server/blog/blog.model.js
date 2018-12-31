@@ -18,13 +18,15 @@ const BlogSchema = new mongoose.Schema(
     content: {
       type: String,
       required: true,
-      trim: true
+      trim: true,
+      index: true
     },
     title: {
       type: String,
       required: true,
       trim: true,
-      unique : true
+      unique : true,
+      index: true
     },
     quote: {
       type: String,

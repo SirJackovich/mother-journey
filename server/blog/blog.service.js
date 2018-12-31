@@ -5,6 +5,7 @@ module.exports = {
   getByPath,
   getByCategory,
   create,
+  find,
   update,
   remove,
   getNewest
@@ -16,6 +17,10 @@ async function getAll() {
 
 async function getByPath(path) {
   return await Blog.findOne({ path });
+}
+
+async function find(query) {
+  return await Blog.find( { $text: { $search: query } } )
 }
 
 async function getByCategory(category) {
