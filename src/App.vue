@@ -2,7 +2,7 @@
   <div id="app">
     <header>
       <div v-if="!isLoggedIn" class="login-wrapper">
-        <router-link class="hide login blue-hover" to="/login">Login</router-link>
+        <a class="hide login blue-hover" v-on:click="goToLogin">Login</a>
       </div>
       <b-dropdown class="login" v-if="isLoggedIn" variant="link" :text="user.username">
         <b-dropdown-item class="blue-hover" to="/blog/create">
@@ -158,6 +158,9 @@
       },
       login(user) {
         this.user = user;
+      },
+      goToLogin(){
+        router.push({ path: '/login', query: { returnUrl: this.$route.path }});
       }
     },
     computed: {

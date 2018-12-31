@@ -83,13 +83,38 @@
             color: color-pink;
           }
         }
+        .dropzone .dz-preview .dz-image {
+          z-index: auto;
+        }
         .vue-dropzone.dz-started {
           background-image: none;
         }
         .multiselect__option--highlight,
         .multiselect__tag {
-          background-color: color-green
+          background-color: color-green;
         }
+        .multiselect__input {
+          margin-bottom: 10px;
+          height: 29px;
+          padding-top: 2px;
+          font-size: 18px;
+          padding-left: 0;
+        }
+        .multiselect__select {
+          border-radius: 25px;
+        }
+        .multiselect__tag-icon:hover {
+          background-color: color-green;
+        }
+        .multiselect--active,
+        .multiselect--active .multiselect__tags,
+        .multiselect--active .multiselect__select,
+        .multiselect:hover .multiselect__tags,
+        .multiselect:hover .multiselect__select,
+        .multiselect__tags:focus ~ .multiselect__select {
+          background-color: white;
+        }
+
       }
     }
   }
