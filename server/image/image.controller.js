@@ -41,12 +41,19 @@ const storage = new GridFsStorage({
 });
 const upload = multer({ storage });
 
+router.post('/', upload.single('file'), create);
 
-router.post('/', upload.single('file'), (req, res) => {
+router.get('/:filename', getImage);
+
+router.get('/info/:filename', info);
+
+module.exports = router;
+
+function create(req, res){
   res.send(req.file.filename);
-});
+}
 
-router.get('/:filename', (req, res) => {
+function getImage(req, res){
   gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
     // Check if file
     if (!file || file.length === 0) {
@@ -66,9 +73,9 @@ router.get('/:filename', (req, res) => {
       });
     }
   });
-});
+}
 
-router.get('/info/:filename', (req, res) => {
+function info(req, res){
   gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
     // Check if file
     if (!file || file.length === 0) {
@@ -79,8 +86,6 @@ router.get('/info/:filename', (req, res) => {
     // File exists
     return res.json(file);
   });
-});
-
-module.exports = router;
+}
 
 
