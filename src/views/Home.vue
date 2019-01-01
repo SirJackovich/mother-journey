@@ -20,7 +20,7 @@
       <div class="blog-boxes">
         <div class="blog-box" v-for="blog in blogs" :key="blog.id" v-on:click="goToBlog(blog.path)">
           <p>{{blog.title}}</p>
-          <img :src="'/api/image/' + blog.photo">
+          <img :src="'/api/image/' + blog.photo" :alt="blog.alt">
         </div>
       </div>
     </div>

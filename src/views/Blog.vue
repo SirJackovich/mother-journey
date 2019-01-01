@@ -19,13 +19,15 @@
       </form>
       <div class="banner resources">
         <h3 class="categories">Categories:</h3>
-        <div class="categories-list">
-          <p class="category" v-for="category in categories.slice(0, 14)" :key="category.id" v-on:click="goToCategory(category.name)">{{category.name}}</p>
+        <div class="list">
+          <a class="item" v-for="category in categories.slice(0, 14)" :key="category.id" v-on:click="goToCategory(category.name)">{{category.name}}</a>
         </div>
       </div>
       <div class="banner archive">
         <h3>Archive:</h3>
-        <p v-for="item in archive" :key="item.id" v-on:click="goToMonth(item)">{{item.month}} {{item.year}} ({{item.count}})</p>
+        <div class="list">
+          <a class="item" v-for="item in archive" :key="item.id" v-on:click="goToMonth(item)">{{item.month}} {{item.year}} ({{item.count}})</a>
+        </div>
       </div>
       <div class="banner contact">
         <h3>Questions or Comments?</h3>
@@ -72,22 +74,25 @@
     }
 
     aside {
+      .list {
+        max-height: 250px;
+        column-width: 100px;
+        .item {
+          text-align: left;
+          color: white;
+          padding-left: 10px;
+          margin-bottom: 5px;
+          cursor: pointer;
+        }
+      }
       .resources {
         padding-top: 15px;
         .categories {
           padding: 10px 0;
         }
-        .categories-list {
-          max-height: 250px;
-          column-width: 50px;
-          .category {
-            text-align: left;
-            color: white;
-            padding-left: 10px;
-            margin-bottom: 5px;
-            cursor: pointer;
-          }
-        }
+      }
+      .archive {
+        background-color: color-purple;
       }
     }
   }
