@@ -95,6 +95,10 @@
           border-top: 1px solid color-pink;
           border-radius: 0;
         }
+        input:focus,
+        input:hover {
+          border-color: color-pink;
+        }
         button {
           background-color: transparent;
           padding: 0;
@@ -189,9 +193,14 @@
       .multiselect__select:hover,
       .vue-dropzone:hover {
         background-color: white;
+        box-shadow: none;
+        border-color: color-green;
       }
       button {
         background-color: color-green;
+      }
+      button:focus {
+        outline: none;
       }
 
     }
