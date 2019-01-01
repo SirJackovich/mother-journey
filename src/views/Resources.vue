@@ -14,7 +14,7 @@
 </template>
 
 <style lang="stylus">
-  @import "../assets/styles/common.styl"
+  @import "../assets/styles/colors.styl"
   #resources{
     h2 {
       color: color-blue;

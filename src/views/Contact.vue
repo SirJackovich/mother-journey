@@ -30,7 +30,7 @@
 </template>
 
 <style lang="stylus">
-  @import "../assets/styles/common.styl"
+  @import "../assets/styles/colors.styl"
 
   #contact{
     h2 {

@@ -52,7 +52,7 @@
 </template>
 
 <style lang="stylus">
-  @import "../assets/styles/common.styl"
+  @import "../assets/styles/colors.styl"
 
   #create{
     h2 {
