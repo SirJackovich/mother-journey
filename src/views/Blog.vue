@@ -2,6 +2,9 @@
   <div id="blog">
     <section>
       <h2>Blog</h2>
+      <p class="subheading" v-if="query">Blogs containing: {{query}}</p>
+      <p class="subheading" v-if="month">{{month}} Blogs</p>
+      <p class="subheading" v-if="category">Blogs about {{category}}</p>
       <div class="box" v-for="blog in blogs" :key="blog.id" v-on:click="goToBlog(blog.path)">
         <img :src="`/api/image/${blog.photo}`" :alt="blog.alt">
         <p>{{blog.title}}</p>
@@ -13,7 +16,7 @@
       <form @submit.prevent="handleSubmit">
         <div class="form-group">
           <label htmlFor="search">Search</label>
-          <input type="text" v-model="query" name="search" class="form-control" />
+          <input type="text" v-model="search" name="search" class="form-control" />
           <button type="submit"><img src="../assets/img/search-icon.svg"></button>
         </div>
       </form>
@@ -46,6 +49,9 @@
     padding: 0 110px;
 
     section {
+      .subheading {
+        text-align:  left;
+      }
       .box {
         cursor: pointer;
         border: 1px solid color-green;
@@ -108,7 +114,10 @@
         blogs: [],
         categories: [],
         archive: [],
-        query: ''
+        query: '',
+        category: '',
+        month: '',
+        search: ''
       }
     },
     created () {
@@ -121,11 +130,11 @@
     methods: {
       handleSubmit (e) {
         // stop here if form is invalid
-        if (!this.query) {
+        if (!this.search) {
           return;
         }
 
-        router.push({ path: '/blog', query: { query: this.query }})
+        router.push({ path: '/blog', query: { query: this.search }})
       },
       goToBlog(path){
         router.push(`/blog/${path}`);
@@ -137,8 +146,12 @@
         router.push({ path: '/blog', query: { month: archive.month + archive.year }})
       },
       getBlogs(query){
+        this.query =  '';
+        this.category = '';
+        this.month = '';
         if(query && (query.category || query.query || query.month)){
           if (query.category) {
+            this.category = query.category;
             blogService.getByCategory(query.category).then(blogs => {
               let options = { year: 'numeric', month: 'long', day: 'numeric' };
               for (let i = 0; i < blogs.length; i++) {
@@ -148,6 +161,7 @@
             });
 
           }else if (query.query) {
+            this.query = query.query;
             blogService.find(query.query).then(blogs => {
               let options = { year: 'numeric', month: 'long', day: 'numeric' };
               for(let i = 0; i < blogs.length; i++){
@@ -156,6 +170,8 @@
               this.blogs = blogs.reverse();
             });
           }else if (query.month) {
+            let archiveParts = query.month.match(/[a-zA-Z]+|[0-9]+/g);
+            this.month = `${archiveParts[0]} ${archiveParts[1]}`;
             blogService.getByMonth(query.month).then(blogs => {
               let options = { year: 'numeric', month: 'long', day: 'numeric' };
               for(let i = 0; i < blogs.length; i++){
