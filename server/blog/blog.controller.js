@@ -29,7 +29,7 @@ function getAll(req, res, next) {
       .then(blogs => res.json(blogs))
       .catch(err => next(err));
   } else if(req.query.month){
-    blogService.getByMonth(req.query.month)
+    blogService.getByMonth(req.query.month, req.query.timezone)
       .then(blogs => res.json(blogs))
       .catch(err => next(err));
   }else{
@@ -64,7 +64,7 @@ function getNewest(req, res, next) {
 }
 
 function getArchive(req, res, next) {
-  blogService.getArchive()
+  blogService.getArchive(req.query.timezone)
     .then(blogs => res.json(blogs))
     .catch(err => next(err));
 }

@@ -49,19 +49,19 @@ async function getNewest() {
   return await Blog.findOne().sort('-createdAt');
 }
 
-async function getArchive() {
+async function getArchive(timezone) {
   return await Blog.aggregate([{
     $project: {
       year: {
         $year: {
           date: "$createdAt",
-          timezone: "America/Denver"
+          timezone: timezone
         }
       },
       month: {
         $month: {
           date: "$createdAt",
-          timezone: "America/Denver"
+          timezone: timezone
         }
       }
     }
@@ -77,7 +77,7 @@ async function getArchive() {
   }]);
 }
 
-async function getByMonth(archive) {
+async function getByMonth(archive, timezone) {
   let archiveParts = archive.match(/[a-zA-Z]+|[0-9]+/g);
   let month = parseInt(getMonthFromString(archiveParts[0]), 10);
   let year = parseInt(archiveParts[1], 10);
@@ -92,13 +92,13 @@ async function getByMonth(archive) {
       year: {
         $year: {
           date: "$createdAt",
-          timezone: "America/Denver"
+          timezone: timezone
         }
       },
       month: {
         $month: {
           date: "$createdAt",
-          timezone: "America/Denver"
+          timezone: timezone
         }
       }
     }

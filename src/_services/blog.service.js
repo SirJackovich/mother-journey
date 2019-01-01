@@ -87,17 +87,19 @@ function getNewest() {
 }
 
 function getArchive() {
+  let timezone  = new Date().getTimezoneOffset();
   const requestOptions = {
     method: 'GET'
   };
 
-  return fetch(`/api/blog/archive`, requestOptions).then(handleResponse);
+  return fetch(`/api/blog/archive?timezone=${timezone}`, requestOptions).then(handleResponse);
 }
 
 function getByMonth(month) {
+  let timezone  = new Date().getTimezoneOffset();
   const requestOptions = {
     method: 'GET'
   };
 
-  return fetch(`/api/blog?month=${month}`, requestOptions).then(handleResponse);
+  return fetch(`/api/blog?month=${month}&timezone=${timezone}`, requestOptions).then(handleResponse);
 }
