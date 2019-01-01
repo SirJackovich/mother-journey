@@ -33,8 +33,18 @@
 <style lang="stylus">
   @import "assets/styles/common.styl"
 
+  @font-face {
+    font-family: 'Noteworthy Light';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Noteworthy'), url('assets/fonts/Noteworthy-Lt.woff') format('woff');
+  }
+
   #app {
     background-color: color-gray;
+    * {
+      font-family: 'Noteworthy Light';
+    }
     header {
       display: flex;
       flex-direction: column;
