@@ -18,15 +18,13 @@ const BlogSchema = new mongoose.Schema(
     content: {
       type: String,
       required: true,
-      trim: true,
-      index: true
+      trim: true
     },
     title: {
       type: String,
       required: true,
       trim: true,
-      unique : true,
-      index: true
+      unique : true
     },
     quote: {
       type: String,
@@ -68,5 +66,6 @@ const BlogSchema = new mongoose.Schema(
 
 BlogSchema.plugin(timestamps);
 BlogSchema.plugin(mongooseStringQuery);
+BlogSchema.index({ title: 'text', content: 'text' });
 
 module.exports = mongoose.model('blog', BlogSchema);
