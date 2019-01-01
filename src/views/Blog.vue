@@ -18,9 +18,9 @@
         </div>
       </form>
       <div class="banner resources">
-        <h3>Categories:</h3>
-        <div v-for="category in categories" :key="category.id" v-on:click="goToCategory(category.name)">
-          <p>{{category.name}}</p>
+        <h3 class="categories">Categories:</h3>
+        <div class="categories-list">
+          <p class="category" v-for="category in categories.slice(0, 10)" :key="category.id" v-on:click="goToCategory(category.name)">{{category.name}}</p>
         </div>
       </div>
       <div class="banner about">
@@ -38,10 +38,11 @@
 <style lang="stylus">
   @import "../assets/styles/colors.styl"
 
-  #blog{
+  #blog {
     display: flex;
     flex-flow: row wrap;
     padding: 0 110px;
+
     section {
       .box {
         cursor: pointer;
@@ -50,9 +51,11 @@
         padding: 20px;
         overflow: auto;
         margin-bottom: 50px;
-        p{
+
+        p {
           text-align: left;
         }
+
         img {
           max-width: 325px;
           float: left;
@@ -62,8 +65,28 @@
           object-fit: contain;
         }
       }
+
       .box:hover {
         background-color: white;
+      }
+    }
+
+    aside {
+      .resources {
+        padding-top: 20px;
+        .categories {
+          padding: 10px 0;
+        }
+        .categories-list {
+          max-height: 250px;
+          column-width: 50px;
+          .category {
+            text-align: left;
+            color: white;
+            padding-left: 10px;
+            cursor: pointer;
+          }
+        }
       }
     }
   }
