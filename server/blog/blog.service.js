@@ -68,7 +68,9 @@ async function getArchive() {
 }
 
 async function getByMonth(archive) {
-  let archiveParts = archive.splice(/[a-zA-Z]+|[0-9]+/g);
+  let archiveParts = archive.match(/[a-zA-Z]+|[0-9]+/g);
+  let month = parseInt(getMonthFromString(archiveParts[0]), 10);
+  let year = parseInt(archiveParts[1], 10);
   return await Blog.aggregate([{
     $project: {
       alt: 1,
@@ -83,7 +85,11 @@ async function getByMonth(archive) {
   },
   {
     $match: {
-      month: archiveParts[0], year: archiveParts[1]
+      month: month, year: year
     }
   }]);
+}
+
+function getMonthFromString(mon){
+  return new Date(Date.parse(mon +" 1, 2012")).getMonth() + 1;
 }

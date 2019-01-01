@@ -132,7 +132,7 @@
         router.push({ path: '/blog', query: { month: archive.month + archive.year }})
       },
       getBlogs(query){
-        if(query && (query.category || query.query)){
+        if(query && (query.category || query.query || query.month)){
           if (query.category) {
             blogService.getByCategory(query.category).then(blogs => {
               let options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -144,6 +144,14 @@
 
           }else if (query.query) {
             blogService.find(query.query).then(blogs => {
+              let options = { year: 'numeric', month: 'long', day: 'numeric' };
+              for(let i = 0; i < blogs.length; i++){
+                blogs[i].createdAt = new Date(blogs[i].createdAt).toLocaleDateString("en-US", options);
+              }
+              this.blogs = blogs.reverse();
+            });
+          }else if (query.month) {
+            blogService.getByMonth(query.month).then(blogs => {
               let options = { year: 'numeric', month: 'long', day: 'numeric' };
               for(let i = 0; i < blogs.length; i++){
                 blogs[i].createdAt = new Date(blogs[i].createdAt).toLocaleDateString("en-US", options);
