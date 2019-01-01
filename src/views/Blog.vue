@@ -59,7 +59,7 @@
           height: 200px;
           width: 100%;
           padding-right: 25px;
-          object-fit: cover;
+          object-fit: contain;
         }
       }
       .box:hover {

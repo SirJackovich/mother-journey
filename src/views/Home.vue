@@ -97,7 +97,7 @@
           img {
             height: 300px;
             width: 100%;
-            object-fit: cover;
+            object-fit: contain;
           }
         }
       }
