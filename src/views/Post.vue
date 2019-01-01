@@ -19,7 +19,7 @@
       </p>
       <p class="content">
         <span class="post-image">
-          <img  :src="post.photo">
+          <img  :src="post.photo" :alt="post.alt">
           <small>{{post.credit}}</small>
         </span>
         <span v-html="post.content"></span>
@@ -153,7 +153,8 @@
           credit: '',
           photo: '',
           older:'',
-          newer:''
+          newer:'',
+          alt: ''
         },
         query: '',
         image: null,

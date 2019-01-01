@@ -21,8 +21,12 @@
         <vue-dropzone ref="myVueDropzone" id="dropzone" @vdropzone-complete="afterComplete" name="photo" class="form-control" :options="dropzoneOptions"></vue-dropzone>
       </div>
       <div class="form-group">
+        <label htmlFor="alt">Photo description</label>
+        <input type="text" v-model="alt" name="alt" class="form-control" />
+      </div>
+      <div class="form-group">
         <label htmlFor="credit">Credit</label>
-        <input type="text" v-model="credit" name="credit" class="form-control" :class="{ 'is-invalid': submitted && !credit }" />
+        <input type="text" v-model="credit" name="credit" class="form-control" />
       </div>
       <div class="form-group">
         <label htmlFor="categories">Categories</label>
@@ -37,8 +41,7 @@
           :show-labels="false"
           @tag="addCategory"
           :options="categoryOptions"
-          :multiple="true"
-          :class="{ 'is-invalid': submitted && !categories }" ></multiselect>
+          :multiple="true"></multiselect>
       </div>
 
       <div class="form-group">
@@ -158,7 +161,8 @@
         error: '',
         post: null,
         older: '',
-        newer:''
+        newer:'',
+        alt: ''
       }
     },
     created () {
@@ -175,6 +179,7 @@
           this.path = post.path;
           this.older = post.older;
           this.newer = post.newer;
+          this.alt = post.alt;
           imageService.info(post.photo).then(image => {
               let file = {};
               file.size = image.length;
@@ -189,9 +194,18 @@
     methods: {
       handleSubmit (e) {
         this.submitted = true;
+        this.error = '';
 
-        // stop here if form is invalid
-        if (!(this.title && this.quote && this.content)) {
+        if (!this.title) {
+          this.error = "Missing title";
+          return;
+        }
+        if (!this.quote) {
+          this.error = "Missing quote";
+          return;
+        }
+        if (!this.content) {
+          this.error = "Missing content";
           return;
         }
 
@@ -201,7 +215,12 @@
         if(this.$refs.myVueDropzone.getQueuedFiles().length > 0){
           this.$refs.myVueDropzone.processQueue();
         }else{
-          this.updateOrCreate();
+          if(this.edit){
+            this.updateOrCreate();
+          }else {
+            this.error = "No photo selected";
+            return;
+          }
         }
       },
       afterComplete(file) {
@@ -212,26 +231,26 @@
       updateOrCreate(file){
         if(this.edit){
           if(file){
-            blogService.update(this.title, this.quote, file.xhr.response, this.content, this.credit, this.categories, this.path, this.older, this.newer).then(
+            blogService.update(this.title, this.quote, file.xhr.response, this.alt, this.content, this.credit, this.categories, this.path, this.older, this.newer).then(
               router.push(`/blog/${this.path}`)
-            );
+            ).catch(err => this.error = err);
           }else{
-            blogService.update(this.title, this.quote, this.post.photo, this.content, this.credit, this.categories, this.path, this.older, this.newer).then(
+            blogService.update(this.title, this.quote, this.post.photo, this.alt, this.content, this.credit, this.categories, this.path, this.older, this.newer).then(
               router.push(`/blog/${this.path}`)
-            );
+            ).catch(err => this.error = err);
           }
         }else{
           blogService.getNewest().then(blog => {
             if (blog) {
-              blogService.update(blog.title, blog.quote, blog.photo, blog.content, blog.credit, blog.categories, blog.path, blog.older, this.path).then(
-                blogService.create(this.title, this.quote, file.xhr.response, this.content, this.credit, this.categories, this.path, blog.path).then(
+              blogService.update(blog.title, blog.quote, blog.photo, blog.alt, blog.content, blog.credit, blog.categories, blog.path, blog.older, this.path).then(
+                blogService.create(this.title, this.quote, file.xhr.response, this.alt, this.content, this.credit, this.categories, this.path, blog.path).then(
                   router.push(`/blog/${this.path}`)
-                )
-              )
+                ).catch(err => this.error = err)
+              ).catch(err => this.error = err);
             } else {
-              blogService.create(this.title, this.quote, file.xhr.response, this.content, this.credit, this.categories, this.path, '').then(
+              blogService.create(this.title, this.quote, file.xhr.response, this.alt, this.content, this.credit, this.categories, this.path, '').then(
                 router.push(`/blog/${this.path}`)
-              )
+              ).catch(err => this.error = err);
             }
           });
         }

@@ -23,9 +23,9 @@
           <p class="category" v-for="category in categories.slice(0, 14)" :key="category.id" v-on:click="goToCategory(category.name)">{{category.name}}</p>
         </div>
       </div>
-      <div class="banner about">
-        <h3>To learn more about the author</h3>
-        <router-link class="button" to="/about" tag="button">Click Here</router-link>
+      <div class="banner archive">
+        <h3>Archive:</h3>
+        <p v-for="item in archive" :key="item.id" v-on:click="goToMonth(item)">{{item.month}} {{item.year}} ({{item.count}})</p>
       </div>
       <div class="banner contact">
         <h3>Questions or Comments?</h3>
@@ -102,12 +102,16 @@
       return {
         blogs: [],
         categories: [],
+        archive: [],
         query: ''
       }
     },
     created () {
       this.getBlogs(this.$route.query);
       categoryService.getAll().then(categories => this.categories  = categories);
+      blogService.getArchive().then(archive => {
+        this.archive = this.processArchive(archive);
+      });
     },
     methods: {
       handleSubmit (e) {
@@ -123,6 +127,9 @@
       },
       goToCategory(category){
         router.push({ path: '/blog', query: { category: category }})
+      },
+      goToMonth(archive){
+        router.push({ path: '/blog', query: { month: archive.month + archive.year }})
       },
       getBlogs(query){
         if(query && (query.category || query.query)){
@@ -153,6 +160,15 @@
             this.blogs = blogs.reverse();
           });
         }
+      },
+      processArchive(archive){
+        const months = ["January", "February", "March", "April", "May", "June",
+          "July", "August", "September", "October", "November", "December"
+        ];
+        for(let i = 0; i < archive.length; i++){
+          archive[i] = {count: archive[i].count, month: months[archive[i]._id.month - 1], year: archive[i]._id.year};
+        }
+        return archive;
       }
     },
     watch: {

@@ -4,12 +4,6 @@ const timestamps = require('mongoose-timestamp');
 
 const BlogSchema = new mongoose.Schema(
   {
-    author: {
-      type: String,
-      required: true,
-      trim: true,
-      default: 'admin'
-    },
     categories: {
       type: Array,
       required: false,
@@ -40,6 +34,12 @@ const BlogSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true
+    },
+    alt: {
+      type: String,
+      required: true,
+      trim: true,
+      default: ""
     },
     path: {
       type: String,

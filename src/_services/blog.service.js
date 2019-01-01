@@ -8,14 +8,15 @@ export const blogService = {
   getByPath,
   update,
   remove,
-  getNewest
+  getNewest,
+  getArchive
 };
 
-function create(title, quote, photo, content, credit, categories, path, older) {
+function create(title, quote, photo, alt, content, credit, categories, path, older) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Authorization': authHeader() },
-    body: JSON.stringify({ title, quote, photo, content, credit, categories, path, older })
+    body: JSON.stringify({ title, quote, photo, alt, content, credit, categories, path, older })
   };
 
   return fetch(`/api/blog/`, requestOptions)
@@ -57,11 +58,11 @@ function getByPath(path) {
   return fetch(`/api/blog/${path}`, requestOptions).then(handleResponse);
 }
 
-function update(title, quote, photo, content, credit, categories, path, older, newer) {
+function update(title, quote, photo, alt, content, credit, categories, path, older, newer) {
   const requestOptions = {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json', 'Authorization': authHeader() },
-    body: JSON.stringify({ title, quote, photo, content, credit, categories, path, older, newer })
+    body: JSON.stringify({ title, quote, photo, alt, content, credit, categories, path, older, newer })
   };
 
   return fetch(`/api/blog/${path}`, requestOptions).then(handleResponse);
@@ -82,4 +83,12 @@ function getNewest() {
   };
 
   return fetch(`/api/blog/newest`, requestOptions).then(handleResponse);
+}
+
+function getArchive() {
+  const requestOptions = {
+    method: 'GET'
+  };
+
+  return fetch(`/api/blog/archive`, requestOptions).then(handleResponse);
 }

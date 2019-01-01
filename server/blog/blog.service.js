@@ -8,7 +8,8 @@ module.exports = {
   find,
   update,
   remove,
-  getNewest
+  getNewest,
+  getArchive
 };
 
 async function getAll() {
@@ -45,4 +46,8 @@ async function remove(path) {
 
 async function getNewest() {
   return await Blog.findOne().sort('-createdAt');
+}
+
+async function getArchive() {
+  return await Blog.aggregate([{ $project: { year: { $year: "$createdAt" }, month: { $month: "$createdAt" } } },{"$group": { "_id": { month: "$month", year: "$year" }, count: {$sum: 1} } }]);
 }

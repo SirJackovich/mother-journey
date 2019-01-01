@@ -6,6 +6,7 @@ const blogService = require('./blog.service');
 router.get('/', getAll);
 router.post('/', create);
 router.get('/newest', getNewest);
+router.get('/archive', getArchive);
 router.get('/:path', getByPath);
 router.put('/:path', update);
 router.delete('/:path', remove);
@@ -55,5 +56,11 @@ function remove(req, res, next) {
 function getNewest(req, res, next) {
   blogService.getNewest()
     .then(blog => blog ? res.json(blog) : res.json())
+    .catch(err => next(err));
+}
+
+function getArchive(req, res, next) {
+  blogService.getArchive()
+    .then(blogs => res.json(blogs))
     .catch(err => next(err));
 }
