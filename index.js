@@ -5,8 +5,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const config = require('./config');
 const path = require('path');
-// const expressJwt = require('express-jwt');
-// const userService = require('./server/user/user.service');
+const expressJwt = require('express-jwt');
+const userService = require('./server/user/user.service');
 
 mongoose.connect(config.db.uri, { useNewUrlParser: true, useCreateIndex: true });
 
@@ -19,15 +19,15 @@ app.use(express.static(path.join(__dirname, '/dist')));
 
 app.use('/api/auth', require('./server/auth/auth.controller'));
 
-app.use('/api/blog', require('./server/blog/blog.controller'));
+app.use('/api/blog', jwt(), require('./server/blog/blog.controller'));
 
-app.use('/api/category', require('./server/category/category.controller'));
-
-app.use('/api/image', require('./server/image/image.controller'));
+app.use('/api/category', jwt(), require('./server/category/category.controller'));
 
 app.use('/api/email', require('./server/email/email.controller'));
 
-app.use('/api/user', require('./server/user/user.controller'));
+app.use('/api/image', jwt(), require('./server/image/image.controller'));
+
+app.use('/api/user', jwt(), require('./server/user/user.controller'));
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, './dist', 'index.html'));
@@ -72,29 +72,11 @@ function errorHandler(err, req, res, next) {
   // default to 500 server error
   return res.status(500).json({ message: err.message });
 }
+function filterRoutes(req){
+  return req.method === "GET";
+}
 
-// TODO: fix the 401 issue
-// function jwt() {
-//   const secret = config.secret;
-//   return expressJwt({ secret, isRevoked }).unless({
-//     path: [
-//       // public routes that don't require authentication
-//       { url: '/api/user/', methods: 'POST' },
-//       { url: '/api/blog/', methods: 'GET' },
-//       { url: '/api/blog/:id', methods: 'GET' },
-//       { url: '/api/category/', methods: 'GET' },
-//       { url: '/api/category/:id', methods: 'GET' }
-//     ]
-//   });
-// }
-//
-// async function isRevoked(req, payload, done) {
-//   const user = await userService.getById(payload.sub);
-//
-//   // revoke token if user no longer exists
-//   if (!user) {
-//     return done(null, true);
-//   }
-//
-//   done();
-// }
+function jwt() {
+  const secret = config.secret;
+  return expressJwt({ secret}).unless(filterRoutes);
+}
