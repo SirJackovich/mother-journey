@@ -6,7 +6,7 @@ module.exports = {
 };
 
 async function getAll() {
-  return await Category.find();
+  return await Category.find({}, null, {sort: {name: 1}});
 }
 
 async function create(categoryParam) {
