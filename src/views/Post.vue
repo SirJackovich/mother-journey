@@ -23,8 +23,8 @@
           <small>{{post.credit}}</small>
         </span>
         <span v-html="post.content"></span>
-        <span>Categories: {{post.categories}}</span>
       </p>
+      <p class="categories" v-if="post.categories.length">Categories: {{post.categories}}</p>
       <div class="paging" :class="{ 'older': !post.newer }">
         <router-link v-if="post.newer" :to="post.newer" tag="button" class="button" ><img class="arrow left" src="../assets/img/right-arrow.svg">Newer Post</router-link>
         <router-link v-if="post.older" :to="post.older" tag="button" class="button" >Older Post<img class="arrow" src="../assets/img/right-arrow.svg"></router-link>
@@ -104,6 +104,9 @@
           text-align: left;
           padding-top: 10px;
         }
+      }
+      .categories {
+        text-align: left;
       }
       .paging {
         display: flex;
