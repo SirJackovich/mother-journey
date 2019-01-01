@@ -24,7 +24,10 @@
         </span>
         <span v-html="post.content"></span>
       </p>
-      <p class="categories" v-if="post.categories.length">Categories: {{post.categories}}</p>
+
+      <p class="categories" v-if="post.categories.length">
+        Categories: <a class="category" v-for="category in post.categories" :key="category.id" v-on:click="goToCategory(category.name)">{{category.name}} </a>
+      </p>
       <div class="paging" :class="{ 'older': !post.newer }">
         <router-link v-if="post.newer" :to="post.newer" tag="button" class="button" ><img class="arrow left" src="../assets/img/right-arrow.svg">Newer Post</router-link>
         <router-link v-if="post.older" :to="post.older" tag="button" class="button" >Older Post<img class="arrow" src="../assets/img/right-arrow.svg"></router-link>
@@ -107,6 +110,9 @@
       }
       .categories {
         text-align: left;
+        .category {
+          cursor: pointer;
+        }
       }
       .paging {
         display: flex;
@@ -191,9 +197,11 @@
             let options = { year: 'numeric', month: 'long', day: 'numeric' };
             this.post.createdAt = new Date(this.post.createdAt).toLocaleDateString("en-US", options);
             this.post.content = this.post.content.replace(/(?:\r\n|\r|\n)/g, '<br>');
-            this.post.categories = Array.prototype.map.call(post.categories, s => s.name).toString();
           }
         });
+      },
+      goToCategory(category){
+        router.push({ path: '/blog', query: { category: category }})
       }
     },
     computed: {
