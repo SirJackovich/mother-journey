@@ -28,6 +28,10 @@ function getAll(req, res, next) {
     blogService.find(req.query.query)
       .then(blogs => res.json(blogs))
       .catch(err => next(err));
+  } else if(req.query.month){
+    blogService.getByMonth(req.query.month)
+      .then(blogs => res.json(blogs))
+      .catch(err => next(err));
   }else{
     blogService.getAll()
       .then(blogs => res.json(blogs))

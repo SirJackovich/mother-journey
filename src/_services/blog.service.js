@@ -9,7 +9,8 @@ export const blogService = {
   update,
   remove,
   getNewest,
-  getArchive
+  getArchive,
+  getByMonth
 };
 
 function create(title, quote, photo, alt, content, credit, categories, path, older) {
@@ -91,4 +92,12 @@ function getArchive() {
   };
 
   return fetch(`/api/blog/archive`, requestOptions).then(handleResponse);
+}
+
+function getByMonth(month) {
+  const requestOptions = {
+    method: 'GET'
+  };
+
+  return fetch(`/api/blog?month=${month}`, requestOptions).then(handleResponse);
 }

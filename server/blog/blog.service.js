@@ -9,7 +9,8 @@ module.exports = {
   update,
   remove,
   getNewest,
-  getArchive
+  getArchive,
+  getByMonth
 };
 
 async function getAll() {
@@ -49,5 +50,40 @@ async function getNewest() {
 }
 
 async function getArchive() {
-  return await Blog.aggregate([{ $project: { year: { $year: "$createdAt" }, month: { $month: "$createdAt" } } },{"$group": { "_id": { month: "$month", year: "$year" }, count: {$sum: 1} } }]);
+  return await Blog.aggregate([{
+    $project: {
+      year: { $year: "$createdAt" },
+      month: { $month: "$createdAt" }
+    }
+  },
+  {
+    $group: {
+      _id: {
+        month: "$month",
+        year: "$year"
+      },
+      count: {$sum: 1}
+    }
+  }]);
+}
+
+async function getByMonth(archive) {
+  let archiveParts = archive.splice(/[a-zA-Z]+|[0-9]+/g);
+  return await Blog.aggregate([{
+    $project: {
+      alt: 1,
+      title: 1,
+      photo: 1,
+      path: 1,
+      createdAt: 1,
+      quote: 1,
+      month : {$month: "$createdAt"},
+      year : {$year: "$createdAt"}
+    }
+  },
+  {
+    $match: {
+      month: archiveParts[0], year: archiveParts[1]
+    }
+  }]);
 }

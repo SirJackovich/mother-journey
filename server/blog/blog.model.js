@@ -4,6 +4,12 @@ const timestamps = require('mongoose-timestamp');
 
 const BlogSchema = new mongoose.Schema(
   {
+    alt: {
+      type: String,
+      required: false,
+      trim: true,
+      default: ""
+    },
     categories: {
       type: Array,
       required: false,
@@ -14,38 +20,10 @@ const BlogSchema = new mongoose.Schema(
       required: true,
       trim: true
     },
-    title: {
-      type: String,
-      required: true,
-      trim: true,
-      unique : true
-    },
-    quote: {
-      type: String,
-      required: true,
-      trim: true
-    },
     credit: {
       type: String,
       required: false,
       trim: true
-    },
-    photo: {
-      type: String,
-      required: true,
-      trim: true
-    },
-    alt: {
-      type: String,
-      required: true,
-      trim: true,
-      default: ""
-    },
-    path: {
-      type: String,
-      required: true,
-      trim: true,
-      unique : true
     },
     newer: {
       type: String,
@@ -56,6 +34,28 @@ const BlogSchema = new mongoose.Schema(
       type: String,
       required: false,
       trim: true
+    },
+    path: {
+      type: String,
+      required: true,
+      trim: true,
+      unique : true
+    },
+    photo: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    quote: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    title: {
+      type: String,
+      required: true,
+      trim: true,
+      unique : true
     }
   },
   {
