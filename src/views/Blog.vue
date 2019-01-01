@@ -152,43 +152,25 @@
         if(query && (query.category || query.query || query.month)){
           if (query.category) {
             this.category = query.category;
-            blogService.getByCategory(query.category).then(blogs => {
-              let options = { year: 'numeric', month: 'long', day: 'numeric' };
-              for (let i = 0; i < blogs.length; i++) {
-                blogs[i].createdAt = new Date(blogs[i].createdAt).toLocaleDateString("en-US", options);
-              }
-              this.blogs = blogs.reverse();
-            });
-
+            blogService.getByCategory(query.category).then(blogs => this.processBlogs(blogs));
           }else if (query.query) {
             this.query = query.query;
-            blogService.find(query.query).then(blogs => {
-              let options = { year: 'numeric', month: 'long', day: 'numeric' };
-              for(let i = 0; i < blogs.length; i++){
-                blogs[i].createdAt = new Date(blogs[i].createdAt).toLocaleDateString("en-US", options);
-              }
-              this.blogs = blogs.reverse();
-            });
+            blogService.find(query.query).then(blogs => this.processBlogs(blogs));
           }else if (query.month) {
             let archiveParts = query.month.match(/[a-zA-Z]+|[0-9]+/g);
             this.month = `${archiveParts[0]} ${archiveParts[1]}`;
-            blogService.getByMonth(query.month).then(blogs => {
-              let options = { year: 'numeric', month: 'long', day: 'numeric' };
-              for(let i = 0; i < blogs.length; i++){
-                blogs[i].createdAt = new Date(blogs[i].createdAt).toLocaleDateString("en-US", options);
-              }
-              this.blogs = blogs.reverse();
-            });
+            blogService.getByMonth(query.month).then(blogs => this.processBlogs(blogs));
           }
         } else{
-          blogService.getAll().then(blogs => {
-            let options = { year: 'numeric', month: 'long', day: 'numeric' };
-            for(let i = 0; i < blogs.length; i++){
-              blogs[i].createdAt = new Date(blogs[i].createdAt).toLocaleDateString("en-US", options);
-            }
-            this.blogs = blogs.reverse();
-          });
+          blogService.getAll().then(blogs => this.processBlogs(blogs));
         }
+      },
+      processBlogs(blogs){
+        let options = { year: 'numeric', month: 'long', day: 'numeric' };
+        for (let i = 0; i < blogs.length; i++) {
+          blogs[i].createdAt = new Date(blogs[i].createdAt).toLocaleDateString("en-US", options);
+        }
+        this.blogs = blogs.reverse();
       },
       processArchive(archive){
         const months = ["January", "February", "March", "April", "May", "June",

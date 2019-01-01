@@ -52,8 +52,18 @@ async function getNewest() {
 async function getArchive() {
   return await Blog.aggregate([{
     $project: {
-      year: { $year: "$createdAt" },
-      month: { $month: "$createdAt" }
+      year: {
+        $year: {
+          date: "$createdAt",
+          timezone: "America/Denver"
+        }
+      },
+      month: {
+        $month: {
+          date: "$createdAt",
+          timezone: "America/Denver"
+        }
+      }
     }
   },
   {
@@ -79,8 +89,18 @@ async function getByMonth(archive) {
       path: 1,
       createdAt: 1,
       quote: 1,
-      month : {$month: "$createdAt"},
-      year : {$year: "$createdAt"}
+      year: {
+        $year: {
+          date: "$createdAt",
+          timezone: "America/Denver"
+        }
+      },
+      month: {
+        $month: {
+          date: "$createdAt",
+          timezone: "America/Denver"
+        }
+      }
     }
   },
   {
