@@ -20,7 +20,7 @@
       <div class="banner resources">
         <h3 class="categories">Categories:</h3>
         <div class="categories-list">
-          <p class="category" v-for="category in categories.slice(0, 10)" :key="category.id" v-on:click="goToCategory(category.name)">{{category.name}}</p>
+          <p class="category" v-for="category in categories.slice(0, 14)" :key="category.id" v-on:click="goToCategory(category.name)">{{category.name}}</p>
         </div>
       </div>
       <div class="banner about">
@@ -73,7 +73,7 @@
 
     aside {
       .resources {
-        padding-top: 20px;
+        padding-top: 15px;
         .categories {
           padding: 10px 0;
         }
@@ -84,6 +84,7 @@
             text-align: left;
             color: white;
             padding-left: 10px;
+            margin-bottom: 5px;
             cursor: pointer;
           }
         }
