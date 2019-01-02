@@ -102,18 +102,18 @@ function getByMonth(month) {
   return fetch(`/api/blog?month=${month}&timezone=${getTimezone()}`, requestOptions).then(handleResponse);
 }
 
-
 function getTimezone() {
   var num = new Date().getTimezoneOffset();
   var sign = '+';
-  if(num < 0){
-    num = num * -1;
+  if(num > 0){
     sign = '-';
+  }else{
+    num = num * -1;
   }
   var hours = (num / 60);
   var rhours = Math.floor(hours);
   var minutes = (hours - rhours) * 60;
   var rminutes = Math.round(minutes);
-  return sign + rhours.toString().padStart(2, '0') + rminutes.toString().padStart(2, '0');
+  return encodeURIComponent(sign + rhours.toString().padStart(2, '0') + rminutes.toString().padStart(2, '0'));
 }
 
