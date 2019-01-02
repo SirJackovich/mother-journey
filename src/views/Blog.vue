@@ -20,21 +20,25 @@
           <button type="submit"><img src="../assets/img/search-icon.svg"></button>
         </div>
       </form>
-      <div class="banner resources">
-        <h3 class="categories">Categories:</h3>
+      <div class="card categories">
+        <h3>Categories:</h3>
         <div class="list">
-          <a class="item" v-for="category in categories.slice(0, 14)" :key="category.id" v-on:click="goToCategory(category.name)">{{category.name}}</a>
+          <a class="item" v-for="category in categories.slice(0, displayCount)" :key="category.id" v-on:click="goToCategory(category.name)">{{category.name}}</a>
+          <a class="item" v-on:click="moreCategories()" v-if="displayCount < categories.length">More...</a>
         </div>
+
       </div>
-      <div class="banner archive">
+      <div class="card archive">
         <h3>Archive:</h3>
-        <div class="list">
+        <div class="list archive">
           <a class="item" v-for="item in archive" :key="item.id" v-on:click="goToMonth(item)">{{item.month}} {{item.year}} ({{item.count}})</a>
         </div>
       </div>
-      <div class="banner contact">
+      <div class="card contact">
         <h3>Questions or Comments?</h3>
-        <router-link class="button" to="/contact" tag="button">Contact Me</router-link>
+        <div class="footer">
+          <router-link class="button" to="/contact" tag="button">Contact Me</router-link>
+        </div>
       </div>
     </aside>
   </div>
@@ -47,7 +51,12 @@
     display: flex;
     flex-flow: row wrap;
     padding: 0 110px;
-
+    .categories {
+      background-color: color-light-blue;
+    }
+    .archive {
+      background-color: color-purple;
+    }
     section {
       .subheading {
         text-align:  left;
@@ -78,29 +87,6 @@
         background-color: white;
       }
     }
-
-    aside {
-      .list {
-        max-height: 250px;
-        column-width: 100px;
-        .item {
-          text-align: left;
-          color: white;
-          padding-left: 10px;
-          margin-bottom: 5px;
-          cursor: pointer;
-        }
-      }
-      .resources {
-        padding-top: 15px;
-        .categories {
-          padding: 10px 0;
-        }
-      }
-      .archive {
-        background-color: color-purple;
-      }
-    }
   }
 </style>
 
@@ -117,7 +103,8 @@
         query: '',
         category: '',
         month: '',
-        search: ''
+        search: '',
+        displayCount: 10
       }
     },
     created () {
@@ -135,6 +122,9 @@
         }
 
         router.push({ path: '/blog', query: { query: this.search }})
+      },
+      moreCategories (){
+        this.displayCount += 10;
       },
       goToBlog(path){
         router.push(`/blog/${path}`);

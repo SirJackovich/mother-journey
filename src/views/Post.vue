@@ -41,17 +41,24 @@
           <button type="submit"><img src="../assets/img/search-icon.svg"></button>
         </div>
       </form>
-      <div class="banner resources">
+      <div class="card resources">
         <h3>Want a list of additional resources?</h3>
-        <router-link class="button" to="/resources" tag="button">Resources</router-link>
+        <div class="footer">
+          <router-link class="button" to="/resources" tag="button">Resources</router-link>
+        </div>
       </div>
-      <div class="banner about">
+      <div class="card about">
         <h3>To learn more about the author</h3>
-        <router-link class="button" to="/about" tag="button">Click Here</router-link>
+        <div class="footer">
+          <router-link class="button" to="/about" tag="button">Click Here</router-link>
+        </div>
       </div>
-      <div class="banner contact">
-        <h3>Have questions or comments?</h3>
-        <router-link class="button" to="/contact" tag="button">Contact Me</router-link>
+      <div class="card contact">
+        <h3>Questions or Comments?</h3>
+        <div class="footer">
+          <router-link class="button" to="/contact" tag="button">Contact Me</router-link>
+        </div>
+
       </div>
     </aside>
   </div>

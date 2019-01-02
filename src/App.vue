@@ -70,6 +70,20 @@
 
   aside {
     flex: .6 0 0;
+    min-width: 200px;
+    .list {
+      min-height: 250px;
+      column-width: 50px;
+
+      .item {
+        text-align: left;
+        color: white;
+        padding-left: 10px;
+        margin-bottom: 5px;
+        cursor: pointer;
+        display: block;
+      }
+    }
     form {
       .form-group {
         margin: 0;
@@ -120,10 +134,29 @@
         background-color: white;
       }
     }
+    .card {
+      border-radius: 15px;
+      padding: 10px;
+      margin: 50px 0;
+      color: white;
+      min-height: 300px;
+      h3 {
+        padding: 0;
+        margin: 0 0 10px 0;
+      }
+      .footer {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+
+        .button {
+          margin: 0;
+        }
+      }
+    }
     .banner {
       border-radius: 15px;
       padding: 40px 10px 10px 10px;
-      height: 330px;
       h3 {
         padding-top: 20px;
         padding-bottom: 50px;
@@ -131,18 +164,27 @@
     }
     .resources {
       background-color: color-light-blue;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
       .button {
         background-color: color-light-blue;
       }
     }
     .about {
       background-color: color-purple;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
       .button {
         background-color: color-purple;
       }
     }
     .contact {
       background-color: color-pink;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
       .button {
         background-color: color-pink;
       }
@@ -224,13 +266,15 @@
 
     header {
       display: flex;
-      flex-direction: column;
+      align-items: flex-start;
       justify-content: space-around;
       background-image: url(assets/img/aaron-burden-heading.jpeg);
-      background-size: 100%;
+      background-size: cover;
+      background-position: top right;
       background-repeat: no-repeat;
-      min-height: 300px;
+      min-height: 100px;
       margin-bottom: 50px;
+      position: relative;
       .login-wrapper {
         display: flex;
         justify-content: flex-end;
@@ -238,7 +282,7 @@
       a {
         color: white;
         font-weight: bold;
-        font-size: 20px;
+        font-size: 14px;
       }
       a:hover,
       button:hover {
@@ -253,6 +297,9 @@
         padding-right: 30px;
         display: flex;
         align-self: flex-end;
+        position: absolute;
+        top: 0;
+        right: 0;
         .btn {
           font-size: 14px;
           font-weight: bold;
@@ -288,21 +335,25 @@
         min-width: auto;
         .dropdown-item {
           padding: 0;
-          font-size: 14px;
+          font-size: 12px;
           padding-right: 30px;
         }
       }
       h1{
-        padding-right: 20%;
+        margin-right: 20%;
         a {
           color: color-blue;
-          font-size: 72px;
+          font-size: 30px;
           font-weight: normal;
         }
       }
       nav{
         display: flex;
         justify-content: space-around;
+        position: absolute;
+        bottom: 5px;
+        left: 0;
+        right: 0;
         .purple-hover:hover,
         .purple-hover.router-link-exact-active {
           color: color-purple;
@@ -313,7 +364,66 @@
         }
       }
     }
+    @media screen and (min-width: 320px) {
+      header {
+        min-height: 100px;
+        a {
+          font-size: 12px;
+        }
+        h1 {
+          height: 30px;
+          a {
+            font-size: 30px;
+            line-height: 30px;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+    @media screen and (min-width: 480px) {
+      header {
+        min-height: 100px;
+        a {
+          font-size: 20px;
+        }
+        h1 {
+          height: 30px;
+          a {
+            font-size: 30px;
+            line-height: 30px;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+    @media screen and (min-width: 768px) {
+      header {
+        min-height: 200px;
+        align-items: center;
 
+        h1 {
+          height: 50px;
+          a {
+            font-size: 50px;
+            line-height: 50px;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+    @media screen and (min-width: 1024px) {
+      header {
+        min-height: 320px;
+        h1 {
+          height: 72px;
+          a {
+            font-size: 72px;
+            line-height: 72px;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
     footer{
       p{
         font-family: Calibri, sans-serif;
