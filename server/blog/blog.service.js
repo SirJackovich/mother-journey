@@ -50,6 +50,7 @@ async function getNewest() {
 }
 
 async function getArchive(timezone) {
+  timezone = timezone.replace(" ", "+");
   return await Blog.aggregate([{
     $project: {
       year: {
@@ -78,6 +79,7 @@ async function getArchive(timezone) {
 }
 
 async function getByMonth(archive, timezone) {
+  timezone = timezone.replace(" ", "+");
   let archiveParts = archive.match(/[a-zA-Z]+|[0-9]+/g);
   let month = parseInt(getMonthFromString(archiveParts[0]), 10);
   let year = parseInt(archiveParts[1], 10);

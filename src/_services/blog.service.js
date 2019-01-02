@@ -87,19 +87,33 @@ function getNewest() {
 }
 
 function getArchive() {
-  let timezone  = new Date().getTimezoneOffset();
   const requestOptions = {
     method: 'GET'
   };
 
-  return fetch(`/api/blog/archive?timezone=${timezone}`, requestOptions).then(handleResponse);
+  return fetch(`/api/blog/archive?timezone=${getTimezone()}`, requestOptions).then(handleResponse);
 }
 
 function getByMonth(month) {
-  let timezone  = new Date().getTimezoneOffset();
   const requestOptions = {
     method: 'GET'
   };
 
-  return fetch(`/api/blog?month=${month}&timezone=${timezone}`, requestOptions).then(handleResponse);
+  return fetch(`/api/blog?month=${month}&timezone=${getTimezone()}`, requestOptions).then(handleResponse);
 }
+
+
+function getTimezone() {
+  var num = new Date().getTimezoneOffset();
+  var sign = '+';
+  if(num < 0){
+    num = num * -1;
+    sign = '-';
+  }
+  var hours = (num / 60);
+  var rhours = Math.floor(hours);
+  var minutes = (hours - rhours) * 60;
+  var rminutes = Math.round(minutes);
+  return sign + rhours.toString().padStart(2, '0') + rminutes.toString().padStart(2, '0');
+}
+
