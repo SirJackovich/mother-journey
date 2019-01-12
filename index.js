@@ -6,7 +6,6 @@ const bodyParser = require('body-parser');
 const config = require('./config');
 const path = require('path');
 const expressJwt = require('express-jwt');
-const userService = require('./server/user/user.service');
 
 mongoose.connect(config.db.uri, { useNewUrlParser: true, useCreateIndex: true });
 
@@ -80,3 +79,5 @@ function jwt() {
   const secret = config.secret;
   return expressJwt({ secret}).unless(filterRoutes);
 }
+
+module.exports = app;
