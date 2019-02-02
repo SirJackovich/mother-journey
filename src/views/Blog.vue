@@ -20,26 +20,9 @@
           <button type="submit"><img src="../assets/img/search-icon.svg"></button>
         </div>
       </form>
-      <div class="card categories">
-        <h3>Categories:</h3>
-        <div class="list">
-          <a class="item" v-for="category in categories.slice(0, displayCount)" :key="category.id" v-on:click="goToCategory(category.name)">{{category.name}}</a>
-          <a class="item" v-on:click="moreCategories()" v-if="displayCount < categories.length">More...</a>
-        </div>
-
-      </div>
-      <div class="card archive">
-        <h3>Archive:</h3>
-        <div class="list archive">
-          <a class="item" v-for="item in archive" :key="item.id" v-on:click="goToMonth(item)">{{item.month}} {{item.year}} ({{item.count}})</a>
-        </div>
-      </div>
-      <div class="card contact">
-        <h3>Questions or Comments?</h3>
-        <div class="footer">
-          <router-link class="button" to="/contact" tag="button">Contact Me</router-link>
-        </div>
-      </div>
+      <mj-list-card title="Categories:" class="categories" :list="categories"></mj-list-card>
+      <mj-archive-list-card title="Archive:" class="archive" :list="archive"></mj-archive-list-card>
+      <mj-button-card title="Questions or Comments?" class="contact" label="Contact Me" link="/contact"></mj-button-card>
     </aside>
   </div>
 </template>
@@ -123,17 +106,8 @@
 
         router.push({ path: '/blog', query: { query: this.search }})
       },
-      moreCategories (){
-        this.displayCount += 10;
-      },
       goToBlog(path){
         router.push(`/blog/${path}`);
-      },
-      goToCategory(category){
-        router.push({ path: '/blog', query: { category: category }})
-      },
-      goToMonth(archive){
-        router.push({ path: '/blog', query: { month: archive.month + archive.year }})
       },
       getBlogs(query){
         this.query =  '';

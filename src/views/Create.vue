@@ -225,9 +225,11 @@
       },
       afterComplete(file) {
         if( file && !file.manuallyAdded){
+          // encapsulation
           this.updateOrCreate(file);
         }
       },
+      // encapsulation private function that is not called externally.
       updateOrCreate(file){
         if(this.edit){
           if(file){

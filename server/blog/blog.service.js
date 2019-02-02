@@ -79,6 +79,7 @@ async function getArchive(timezone) {
 
 async function getByMonth(archive, timezone) {
   let archiveParts = archive.match(/[a-zA-Z]+|[0-9]+/g);
+  // encapsulation
   let month = parseInt(getMonthFromString(archiveParts[0]), 10);
   let year = parseInt(archiveParts[1], 10);
   return await Blog.aggregate([{
@@ -110,6 +111,7 @@ async function getByMonth(archive, timezone) {
   }]);
 }
 
+// encapsulation
 function getMonthFromString(mon){
   return new Date(Date.parse(mon +" 1, 2012")).getMonth() + 1;
 }
