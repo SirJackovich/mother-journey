@@ -25,20 +25,11 @@ npm start
 npm run serve
 ```
 
-### Run your tests
+### Run your tests (database needs to be running)
 ```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
+npm test
 ```
 
-### Run your unit tests
-```
-npm run test:unit
-```
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
