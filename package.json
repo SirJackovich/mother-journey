@@ -40,7 +40,7 @@
   },
   "scripts": {
     "build": "vue-cli-service build",
-    "preCommit": "vue-cli-service build && git add dist/*",
+    "preCommit": "npm test && vue-cli-service build && git add dist/*",
     "serve": "vue-cli-service serve",
     "start": "node index.js",
     "test": "mocha --timeout 10000"
