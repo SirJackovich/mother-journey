@@ -44,7 +44,7 @@ const storage = new GridFsStorage({
 });
 const upload = multer({ storage });
 
-app.use(requireHTTPS);
+// app.use(requireHTTPS);
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors());
@@ -84,14 +84,14 @@ app.listen(config.port);
 console.log('App listening on port ' + config.port);
 
 // Redirect http to https
-function requireHTTPS(req, res, next) {
-  // Insecure request
-  if (app.get('env') !== 'development' && req.get('x-forwarded-proto') === 'http') {
-    // Redirect to https://
-    return res.redirect('https://' + req.get('host') + req.url);
-  }
-  next();
-}
+// function requireHTTPS(req, res, next) {
+//   // Insecure request
+//   if (app.get('env') !== 'development' && req.get('x-forwarded-proto') === 'http') {
+//     // Redirect to https://
+//     return res.redirect('https://' + req.get('host') + req.url);
+//   }
+//   next();
+// }
 
 function errorHandler(err, req, res, next) {
   if (typeof (err) === 'string') {
