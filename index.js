@@ -45,7 +45,6 @@ const storage = new GridFsStorage({
 const upload = multer({ storage });
 
 // app.use(requireHTTPS);
-app.use(requireHTTP);
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors());
@@ -93,16 +92,6 @@ console.log('App listening on port ' + config.port);
 //   }
 //   next();
 // }
-
-// Redirect https to http
-function requireHTTP(req, res, next) {
-  // secure request
-  if (app.get('env') !== 'development' && req.get('x-forwarded-proto') === 'https') {
-    // Redirect to http://
-    return res.redirect('http://' + req.get('host') + req.url);
-  }
-  next();
-}
 
 function errorHandler(err, req, res, next) {
   if (typeof (err) === 'string') {
