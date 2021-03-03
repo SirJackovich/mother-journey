@@ -34,7 +34,7 @@
     "vue-style-loader": "^3.1.2",
     "vue-template-compiler": "^2.5.17",
     "vue2-dropzone": "^3.5.2",
-    "chai": "^3.5.0",
+    "chai": "^4.3.1",
     "chai-http": "^2.0.1",
     "mocha": "^2.4.5"
   },
